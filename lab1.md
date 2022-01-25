@@ -1,1 +1,1 @@
-### Page for Lab 1: Artermis
+### Lab 1: Artemis
