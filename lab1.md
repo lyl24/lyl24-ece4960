@@ -3,12 +3,8 @@
 ## Objective:
 #### - Become familiar with the Arduino IDE and Artemis board
 
-## Parts Required:
-#### - 1x SparkFun RedBoard Artemis Nano
-#### - 1x USB C-to-C or A-to-C cable
-
 ## Part 1: Download and Install the Arduino IDE
-For this step, I already had the Arduino IDE installed on my laptop for previous robotics projects. 
+For this step, I already had the Arduino IDE installed on my laptop. 
 
 ## Part 2: Hook the Artemis board up to a computer
 Next, I installed the SparkFun Apollo3 Arduino Core using the following [setup instructions](https://learn.sparkfun.com/tutorials/artemis-development-with-arduino?_ga=2.30055167.1151850962.1594648676-1889762036.1574524297&_gac=1.19903818.1593457111.Cj0KCQjwoub3BRC6ARIsABGhnyahkG7hU2v-0bSiAeprvZ7c9v0XEKYdVHIIi_-J-m5YLdDBMc2P_goaAtA4EALw_wcB).
@@ -28,11 +24,11 @@ To load this example, click on **File->Examples->Apollo3->Example04_Serial** and
 When running the code with the Serial Monitor, we can see that it first counts from 0 up to 9, then allows for users to input characters and "echoes" it back to you.
 
 ## Part 5: Analog Read
-To load this example, click on **File->Examples->Apollo3->Example02_AnalogRead** and then upload to the board. The Artemis board includes an analog to digital convert (ADC), and this example shows us how to use the analogRead function to read the input on one of the analog pins. With this functionality, we can measure differential pairs, the internal die temperature, the internal VCC voltage, and the internal VSS voltage. The brightness of the built-in LED also depends on the voltage read in the analog pins. For this section, we will use it to measure the temperature of the chip.
+To load this example, click on **File->Examples->Apollo3->Example02_AnalogRead** and then upload to the board. The Artemis board includes an analog to digital convert (ADC), and this example shows us how to use the analogRead function to read the input on one of the analog pins. Using ADC, we can measure differential pairs, the internal die temperature, the internal VCC voltage, and the internal VSS voltage. The brightness of the built-in LED also depends on the voltage read in the analog pins. For this section, we will use it to measure the temperature of the chip.
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/WbexvW_9EFU" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
-When opening the Serial Monitor, we can see that for every millisecond (displayed on the far right), the program computes the following: the raw ADC counts from die temperature using the  analogReadTemp function, the VCC across a 1/3 voltage divider using the analogReadVCCDiv3 function, and the VSS using the analogReadVSS function. We are interested in the first entry, as it can tell us about temperature changes. When I placed my hand on the chip, this value increased, and the built-in LED got brighter. As soon as I removed my hand, this value decreased, and the built-in LED faded.
+When opening the Serial Monitor, we can see that for every millisecond (displayed on the far right), the program computes the following: the raw ADC counts from die temperature, the VCC across a 1/3 voltage divider, and the VSS. We are interested in the first entry, as it can tell us about temperature changes. When I placed my hand on the chip, this value increased, and the built-in LED got brighter. As soon as I removed my hand, this value decreased, and the built-in LED faded.
   
 ## Part 6: Microphone Output
 To load this example, click on **File->Examples->PDM->Example1_MicrophoneOutput** and then upload to the board. This example demonstrates how to use the pulse density microphone (PDM) on the Artemis board, and it can be used to measure the loudest frequency in the board's surroundings.
@@ -104,7 +100,5 @@ void loop()
   am_hal_sysctrl_sleep(AM_HAL_SYSCTRL_SLEEP_DEEP);
 }
 ```
-
-Thanks for reading!
 
 ### [Click here to return to homepage](https://lyl24.github.io/lyl24-ece4960)
