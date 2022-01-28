@@ -25,16 +25,18 @@ As seen in the video, the blue LED on the board turns on for one second, turns o
 To load this example, click on **File->Examples->Apollo3->Example04_Serial** and then upload to the board. This example demonstrates serial communication, which allows for communication between the computer and the Artemis board.
   
 <p align = 'center'>
-  
+<iframe width="560" height="315" src="https://www.youtube.com/embed/oDvsFhYsKt0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 When running the code with the Serial Monitor, we can see that it first counts from 0 up to 9, then allows for users to input characters and "echoes" it back to you.
 
 ## Part 5: Analog Read
-To load this example, click on **File->Examples->Apollo3->Example02_AnalogRead** and then upload to the board. The Artemis board includes an analog to digital convert (ADC), and this example shows us how to use the analogRead function to read the input on one of the analog pins. With this functionality, we can measure differential pairs, the internal die temperature, the internal VCC voltage, and the internal VSS voltage. The brightness of the built-in LED also depends on the voltage read in the analog pins.
+To load this example, click on **File->Examples->Apollo3->Example02_AnalogRead** and then upload to the board. The Artemis board includes an analog to digital convert (ADC), and this example shows us how to use the analogRead function to read the input on one of the analog pins. With this functionality, we can measure differential pairs, the internal die temperature, the internal VCC voltage, and the internal VSS voltage. The brightness of the built-in LED also depends on the voltage read in the analog pins. For this section, we will use it to measure the temperature of the chip.
 
 <p align = 'center'>
-<iframe width="560" height="315" src="https://www.youtube.com/embed/8c7wGDTxjlE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/WbexvW_9EFU" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
-When opening the Serial Monitor, we can see that for every millisecond (displayed on the far right), the program computes the following: the raw ADC counts from die temperature using the  analogReadTemp() function, the VCC across a 1/3 voltage divider using the analogReadVCCDiv3() function, and the VSS using the analogReadVSS() function.
+When opening the Serial Monitor, we can see that for every millisecond (displayed on the far right), the program computes the following: the raw ADC counts from die temperature using the  analogReadTemp() function, the VCC across a 1/3 voltage divider using the analogReadVCCDiv3() function, and the VSS using the analogReadVSS() function. We are interested in the first entry, as it can tell us about temperature changes. When I placed my hand on the chip, this value increased, and the built-in LED got brighter. As soon as I removed my hand, this value decreased, and the built-in LED faded.
+  
+## Part 6: 
 
 ### [Click here to return to homepage](https://lyl24.github.io/lyl24-ece4960)
