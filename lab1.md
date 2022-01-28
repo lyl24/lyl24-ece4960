@@ -16,6 +16,10 @@
 ## Part 3: Blink it Up!
 #### This example code allows the LED on the Artemis board to blink on and off. To load the blink example onto the board, open the Arduino IDE and click on **File->Examples->01.Basics->Blink.** Then, click the upload button and watch the LED blink!
 
-link: https://youtu.be/8Zb-Iq6CxyQ
+[![Part-3-Video](images/lab1part3.png)](https://youtu.be/8Zb-Iq6CxyQ)
+
+## Part 4:
+
+## Part 5:
 
 ### [Click here to return to homepage](https://lyl24.github.io/lyl24-ece4960)
