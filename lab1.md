@@ -1,4 +1,4 @@
-### [Click here to return to homepage](https://lyl24.github.io/lyl24-ece4960/lab1)
+### [Click here to return to homepage](https://lyl24.github.io/lyl24-ece4960)
 
 ## Lab 1: The Artemis board
 
