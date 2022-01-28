@@ -46,7 +46,7 @@ For this task, the goal is for the built-in LED to blink on when the board detec
 
 To start off, I took the example code for Part 6 (Microphone Output) and modified the setup loop to include initialization of the built-in LED.
 
-'''
+```
 void setup()
 {
   Serial.begin(115200);
@@ -64,7 +64,7 @@ void setup()
 
   printPDMConfig();
 }
-'''
+```
 
 
 
