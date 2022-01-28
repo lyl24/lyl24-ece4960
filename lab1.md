@@ -16,12 +16,17 @@
 ## Part 3: Blink it Up!
 #### This example code allows the LED on the Artemis board to blink on and off. To load the blink example onto the board, open the Arduino IDE and click on **File->Examples->01.Basics->Blink.** Then, click the upload button and watch the LED blink!
 
+<iframe width="560" height="315" src="https://www.youtube.com/embed/8Zb-Iq6CxyQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+<p align = 'center'>
 <iframe width="560" height="315" src="https://youtu.be/8Zb-Iq6CxyQ" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
 
 [![Part-3-Video](images/lab1part3.png)](https://youtu.be/8Zb-Iq6CxyQ)
 
-## Part 4:
+## Part 4: Analog Read
+#### This example code allows us to . To load this example, click on **File->Examples->Apollo3->Example02_AnalogRead** and then upload to the board.
 
-## Part 5:
+## Part 5: Serial
+#### This example code allows us to . To load this example, click on **File->Examples->Apollo3->Example04_Serial** and then upload to the board.
 
 ### [Click here to return to homepage](https://lyl24.github.io/lyl24-ece4960)
