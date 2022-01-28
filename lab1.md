@@ -32,7 +32,7 @@ To load this example, click on **File->Examples->Apollo3->Example02_AnalogRead**
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/WbexvW_9EFU" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
-When opening the Serial Monitor, we can see that for every millisecond (displayed on the far right), the program computes the following: the raw ADC counts from die temperature using the  analogReadTemp() function, the VCC across a 1/3 voltage divider using the analogReadVCCDiv3() function, and the VSS using the analogReadVSS() function. We are interested in the first entry, as it can tell us about temperature changes. When I placed my hand on the chip, this value increased, and the built-in LED got brighter. As soon as I removed my hand, this value decreased, and the built-in LED faded.
+When opening the Serial Monitor, we can see that for every millisecond (displayed on the far right), the program computes the following: the raw ADC counts from die temperature using the  analogReadTemp function, the VCC across a 1/3 voltage divider using the analogReadVCCDiv3 function, and the VSS using the analogReadVSS function. We are interested in the first entry, as it can tell us about temperature changes. When I placed my hand on the chip, this value increased, and the built-in LED got brighter. As soon as I removed my hand, this value decreased, and the built-in LED faded.
   
 ## Part 6: Microphone Output
 To load this example, click on **File->Examples->PDM->Example1_MicrophoneOutput** and then upload to the board. This example demonstrates how to use the pulse density microphone (PDM) on the Artemis board, and it can be used to measure the loudest frequency in the board's surroundings.
@@ -66,6 +66,45 @@ void setup()
 }
 ```
 
+With the default code, the board would simply listen for sounds in the environment and print out the loudest frequency. I wanted it to listen for sounds, and if the measured frequency was above a certain threshold, the LED would then turn on. If the measured frequency is below this threshold (or zero), the LED would be turned off. In order to figure out the loudest frequency, I had to first modify the printLoudest function so that it could return the frequency, rather than just print it out. To do this, I changed the first line of the function:
 
+```
+void printLoudest(void) //Original code
+int printLoudest(void) //Modified code
+```
+
+Then, I added another line to the end of the function to return the loudest frequency:
+
+```
+return ui32LoudestFrequency;
+```
+
+After modifying the printLoudest function, I could then modify the main loop. To do this, I was able to obtain the current frequency readings using printLoudest. With these readings, I used conditional statements to determine whether or not a sound was detected in the environment. The sensitivity of the microphone can be adjusted by changing the threshold in the if statement, and after playing with the program for a bit, I determined that 100 was a decent threshold for detection of whistling.
+
+```
+void loop()
+{
+  if (myPDM.available())
+  {
+    myPDM.getData(pdmDataBuffer, pdmDataBufferSize);
+
+    int frequency = printLoudest();
+
+    if (frequency > 100)
+    {
+      digitalWrite(LED_BUILTIN, HIGH);
+    }
+    else
+    {
+      digitalWrite(LED_BUILTIN, LOW);
+    }
+  }
+
+  // Go to Deep Sleep until the PDM ISR or other ISR wakes us.
+  am_hal_sysctrl_sleep(AM_HAL_SYSCTRL_SLEEP_DEEP);
+}
+```
+
+Thanks for reading!
 
 ### [Click here to return to homepage](https://lyl24.github.io/lyl24-ece4960)
