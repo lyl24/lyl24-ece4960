@@ -61,7 +61,7 @@ void setup()
 }
 ```
 
-With the default code, the board would simply listen for sounds in the environment and print out the loudest frequency. I wanted it to listen for sounds, and if the measured frequency was above a certain threshold, the LED would then turn on. If the measured frequency is below this threshold (or zero), the LED would be turned off. In order to figure out the loudest frequency, I had to first modify the printLoudest function so that it could return the frequency, rather than just print it out. To do this, I changed the first line of the function:
+With the default code, the board would simply listen for sounds in the environment and print out the loudest frequency. I wanted it to listen for sounds, and if the measured frequency is above a certain threshold, the LED would then turn on. If the measured frequency is below this threshold (or zero), the LED would be turned off. In order to figure out the loudest frequency, I had to first modify the printLoudest function so that it could return the frequency, rather than just print it out. To do this, I changed the first line of the function:
 
 ```
 void printLoudest(void) //Original code
