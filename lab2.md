@@ -47,7 +47,7 @@ Using the ECHO command, we receive the original string with the prefix "Robot sa
 ![Part 1 Output](images/part 1 output.PNG)
 
 ## Task 2: SEND_THREE_FLOATS
-Now, we want to send three floats to the Artemis board using the SET_THREE_FLOAT command, then extract the three float values in the Arduino sketch. I added the following code with explanations to the ```ble_arduino.ino``` sketch:
+Now, we want to send three floats to the Artemis board using the ```SEND_THREE_FLOATS``` command, then extract the three float values in the Arduino sketch. I added the following code with explanations to the ```ble_arduino.ino``` sketch:
 
 ```
 case SEND_THREE_FLOATS:
@@ -82,7 +82,7 @@ Next, I used the following code in the Jupyter notebook to send three floats to 
 The results can be viewed in the Arduino serial monitor.
 ![Part 2 Output](images/part 2 output.PNG)
 
-As seen above, the output consists of the three floats that we sent to the board. In addition, each float has the same number of decimal places to match the value with the highest number of values after the decimal point (7.45).
+As seen above, the output consists of the three floats that we sent to the board. In addition, each float has the same number of decimal places to match the value with the highest number of digits after the decimal point (7.45).
 
 ## Task 3: Notification Handler
 In this step, we want to set up a notification handler in Python to receive the float value from the Artemis board. This can be done with the ```start_notify``` and ```stop_notify``` functions.  
