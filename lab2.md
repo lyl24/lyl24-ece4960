@@ -84,7 +84,29 @@ The results can be viewed in the Arduino serial monitor.
 
 As seen above, the output consists of the three floats that we sent to the board. In addition, each float has the same number of decimal places to match the value with the highest number of values after the decimal point (7.45).
 
-## Part 3: Blink it Up!
+## Task 3: Notification Handler
+In this step, we want to set up a notification handler in Python to receive the float value from the Artemis board. This can be done with the ```start_notify``` and ```stop_notify``` functions.  
+
+```
+ble.stop_notify(ble.uuid['RX_FLOAT'])
+```  
+
+```
+get_float = 0
+def handle_notify(uuid, byte_array):
+    extracted_float = ble.bytearray_to_float(byte_array)
+    global get_float 
+    get_float = extracted_float
+    print(get_float)
+    
+ble.start_notify(ble.uuid['RX_FLOAT'], handle_notify)
+```  
+
+In the code above, the notification handler receives a float value from the board, and the float is extracted into ```extracted_float``` using the ```bytearray_to_float``` function. Next, this value is transferred to the global variable ```get_float``` and is printed so that we can see every time the characteristic value changes. The ```stop_notify``` function above is used to turn off the notifications.  
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/AW7HkeR5Uy4" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+In this video, we can see that as soon as the notification handler is run, all updates to the characteristic value are printed out. Then, after stopping the notification handler, we can print out ```get_float``` to see the last value stored in this global variable.
 
 ## Part 4: Serial
 
