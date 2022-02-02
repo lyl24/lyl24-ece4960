@@ -108,9 +108,37 @@ In the code above, the notification handler receives a float value from the boar
 
 In this video, we can see that as soon as the notification handler is run, all updates to the characteristic value are printed out. Then, after stopping the notification handler, we can print out ```get_float``` to see the last value stored in this global variable.
 
-## Part 4: Serial
+## Part 4: 
 
-## Additional Task 1: 
+## Additional Task 1: Effective Data Rate
+In this task, we want to send a message from the computer and receive a reply from the Artemis board. To do this, I wrote the following Python code.
+
+```
+import time
+
+end_time = 0
+def handle_notify_string(uuid, byte_array):
+    extracted_string = ble.bytearray_to_string(byte_array)
+    global end_time
+    end_time = time.time()
+    print(end_time)
+
+ble.start_notify(ble.uuid['RX_STRING'], handle_notify_string)
+start_time = time.time()
+print(start_time)
+ble.send_command(CMD.ECHO, "Hi Artemis!")
+```
+
+First, I imported the Python time library, which contains the ```time``` function and allows me to find the amount of time in seconds elapsed since January 1st, 1970. Before running the ECHO command, I got the current time and stored the value into ```start_time```. Next, I wrote a modified version of the notification handler from part 3 that can handle string inputs. Within this function, as soon as there is a change detected in the string characteristic value, this means that the board has created and sent a reply. We can get the time of this event using the ```time``` function again, and this is stored in the global variable ```end_time```.
+
+```
+time_elapsed = end_time - start_time
+print(time_elapsed)
+```
+
+To find the time elapsed, we can take the difference between the start and end events. To calculate data rate, we can take the size of the string in bytes and divide by the time elapsed in seconds. For the example message above, we sent "Hi Artemis!" and receieved "Robot says -> Hi Artemis :)"
+
+To do this, I wrote code to note the respective times for each event, calculate the data rate and include at least one plot to support your write-up.
 
 ## Additional Task 2: 
 
