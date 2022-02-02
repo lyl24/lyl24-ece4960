@@ -40,7 +40,7 @@ case ECHO:
     break;
 ```
 
-After burning the updated sketch to the board, I called the following commands in Jupyter notebook as follows.  
+After burning the updated sketch to the board, I called the following commands in Jupyter notebook.  
 ![Part 1 Jupyter](images/part 1 jupyter.PNG)
 
 Using the ECHO command, we receive the original string with the prefix "Robot says -> " and the postfix " :)". This output can also be viewed in the Arduino serial monitor.  
