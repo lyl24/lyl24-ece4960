@@ -136,10 +136,23 @@ time_elapsed = end_time - start_time
 print(time_elapsed)
 ```
 
-To find the time elapsed, we can take the difference between the start and end events. To calculate data rate, we can take the size of the string in bytes and divide by the time elapsed in seconds. For the example message above, we sent "Hi Artemis!" and receieved "Robot says -> Hi Artemis :)"
+To find the time elapsed, we can take the difference between the start and end events. To calculate data rate, we take the size of the outgoing message plus the size of the incoming message (both in bytes), then divide by the time elapsed in seconds. For the example message above, we sent "Hi Artemis!" and receieved "Robot says -> Hi Artemis :)". 
 
-To do this, I wrote code to note the respective times for each event, calculate the data rate and include at least one plot to support your write-up.
+![Add Part 1 Jupyter](images/add part 1 jupyter.PNG)
+
+With this code, the total amount of data transferred was 137 bytes, and the time elapsed was 0.299 seconds. Dividing the size by time, we get a data rate of 459.61 bytes/second. We can test out different outgoing messages to modify the total amount of data transferred, then measure the time elapsed and data rate. I collected data for messages of varying sizes in the table below, and I created a plot of the amount of data transferred vs time elapsed.
+
+![Add Part 1 Plot](images/add part 1 plot.PNG)
+
+As seen in the image, the plot does not really show a clear pattern. Each time I ran the code to compute data rate, the values for time elapsed would change somewhat drastically, and the resulting values for data rate were also affected. From this data, the only conclusion I can come to is that for an amount of data between 100-200 bytes, the data rate is about 500-700 bytes per second.
 
 ## Additional Task 2: 
+Next, we want to figure out what happens when you send data at a higher rate from the robot to the computer, and if the computer reads all the data published without missing anything from the Artemis board. To test this out, I sent an extremely long string consisting of many repeating hello's as the outgoing message, however, this ended up with the following error: ```Exception: Cannot write string larger than 150 bytes```. I decreased the number of hello's in my string and gathered the following data.
+
+![Add Part 2 Plot](images/add part 2 plot.PNG)
+
+The data rate clearly increased as compared to Additional Task 1. The messages sent from the board back to the computer were also perfectly accurate, and it did not seem like the computer missed any of the data from the Artemis board. (The return messages consisted of ```Robots says -> Hello hello hello ... :)``` with varying amounts of hello's, and each one of these messages contained the correct number of hello's. Unfortunately, I cannot include a screenshot here since these messages were obscenely long due to the number of hello's I could fit in.)
+
+Thanks for reading!
 
 ### [Click here to return to homepage](https://lyl24.github.io/lyl24-ece4960)
