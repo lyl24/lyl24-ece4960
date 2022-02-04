@@ -108,7 +108,10 @@ In the code above, the notification handler receives a float value from the boar
 
 In this video, we can see that as soon as the notification handler is run, all updates to the characteristic value are printed out. Then, after stopping the notification handler, we can print out ```get_float``` to see the last value stored in this global variable.
 
-## Part 4: 
+## Task 4: Explain the difference between the following approaches...
+### 1. Receiving a float value in Python using ```receive_float()``` on a characteristic that is defined as ```BLEFloatCharacteristic``` in the Arduino side.
+### 2. Receiving a float value in Python using ```receive_string()``` (and subsequently converting it to a float type in Python) on a characteristic that is defined as a ```BLECStringCharactersitic``` in the Arduino side
+For the second option, you could send an ASCII-encoded string to the board containing multiple types of values, including strings, integers and floats. In the demo code, we could send an appended string consisting of both strings and a float value: ```[->9.0<-]```. The "9.0" in this string can be extracted and converted back to a float type in Python, however we would need to be extra careful not to exceed the 512-byte limit using this approach. The first option is less expensive in terms of memory, however we would only be able to send and recieve float values using this approach.  
 
 ## Additional Task 1: Effective Data Rate
 In this task, we want to first send a message from the computer and receive a reply from the Artemis board, then calculate the data rate. To do this, I wrote the following Python code.
