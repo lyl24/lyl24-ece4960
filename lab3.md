@@ -12,11 +12,11 @@ In addition, the I2C addresses for the ToF sensors are the same (0x52). The addr
 ## Lab 3(a): Time of Flight Sensors
 First, I installed the SparkFun VL53L1X 4m laser distance sensor library in Arduino, and I connect one of the VL53L1X breakout boards to the Artemis board using the QWIIC-to-cable connector. I used daisy chaining to connect the other ToF sensor and IMU as well, and these components were sautered together. I ran out of time during my lab session, so I finished soldering in the Maker Lab in Philips Hall.
 
-![Solder Progress](images/lab3/solder progress.JPG)
+![Solder Progress](images/lab3/solder progress.JPG =250x250)
 
 As seen below, the boards are hooked up in the following order: Artemis Nano -> ToF sensor #1 -> IMU -> ToF sensor #2. The XSHUT pin on ToF sensor #1 is connected to pin 8 on the Artemis board.
 
-![Complete Solder](images/lab3/complete solder.JPG)
+![Complete Solder](images/lab3/complete solder.JPG =250x250)
 
 ### Task 1: Scan the I2C channel to find the sensor
 To do this, I went to File->Examples->Wire and opened Example1_wire, and I updated the pin numbers: SDA corresponds to pin D17, and SCL corresponds to pin D18. I ran the code, and the following text was output in the serial monitor:
@@ -163,9 +163,9 @@ The ToF sensor has three modes that optimize the ranging performance given the m
 ### Task 3: Test ToF Sensor Mode
 Using the “..\Arduino\libraries\SparkFun_VL53L1X_4m_Laser_Distance_Sensor\examples\Example1_ReadDistance” example and a ruler, I tested out ToF sensor and documented the sensor range, accuracy, repeatability, and ranging time. Upon reading the documentation for this example, I found that there are only short and long distance modes, and no medium distance mode. I ended up using the long distance mode since its range is closer to 3 m. To measure the distance, I set out a tape measure on the ground, pinned the ToF sensor to the back of my laptop using a ukulele capo, and measured the distance to a box.
 
-![Distance Measurement 1](images/lab3/tof setup 1.JPG)
+![Distance Measurement 1](images/lab3/tof setup 1.JPG =250x250)
 
-![Distance Measurement 2](images/lab3/tof setup 2.JPG)
+![Distance Measurement 2](images/lab3/tof setup 2.JPG =250x250)
 
 
 
