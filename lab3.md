@@ -167,12 +167,16 @@ Using the “..\Arduino\libraries\SparkFun_VL53L1X_4m_Laser_Distance_Sensor\exam
 
 ![Distance Measurement 2](images/lab3/tof setup 2.JPG =250x250)
 
+The results for the measurements are as follows:
 
+![Distance readings][(images/lab3/distance readings.PNG =250x250)
+
+From these results, we can see that the sensors can detect between 0 to 2 meters with reasonable accuracy, however the accuracy is lower as the distance increases. The precision/repeatability also decreases as the distance increases, as seen from the increased standard deviation. 
 
 I also measured the distance to objects with different colors and textures. The measurements for a brown cardboard box versus a white wall did not differ very much, and the the sensor is not too sensitive to different textures, as long as the surface is reasonably flat. For all measurements, the accuracy dropped quickly once the distance reached above 1 m, and the sensor would usually underestimate the distances.
 
 ### Task 4: Two ToF Sensors
-Using notes from the pre-lab, hook up both ToF sensors simultaneously and demonstrate that both works.
+After hooking up both of the ToF sensors using daisy chaining, I used the shutdown pin on one sensor to temporarily disable it. Next, I changed the I2C address of the second ToF sensor, then reactivated the first ToF sensor. Now, both sensors have different I2C addresses and both can be used at the same time.
 
 ### Additional Task 1: Infrared Sensors
 Many distance sensors are based on infrared trasmission, and there are two types of infrared sensors: active IR sensors emit and receive infrared radiation to detect motion and proximity, while passive IR sensors receive natural infrared radiation from nearby objects and are activated when there is a change in the IR waves in the environment. Active IR sensors are good for robotics, while passive IR sensors are good for detecting the movement of people, animals, and objects.
@@ -182,6 +186,12 @@ Passive IR sensors are inexpensive, and they are sensitive to changes in the IR 
 Some other broad uses of IR sensors include night vision, tracking nanoparticles in living organisms, home security, missile tracking in military activities, and telescopes/solid-state detectors in astronomy.
 
 Source: [https://www.getkisi.com/guides/infrared-sensors](https://www.getkisi.com/guides/infrared-sensors)
+
+### Additional Task 2: Intermeasurement Period and Timing Budget
+I do not know how fast the robot will be, but based on the speed of the unaltered robot, I will estimate the speed of the modified robot to be about 1 m/s. With this in mind, the intermeasurement period (the delay between two ranging operations) should not be too long, or else the robot will outrun the sensor. The intermeasurement period would also depend on the environment -- an environment with many obstacles would require a shorter intermeasurement period, while a longer intermeasurement period for open spaces would be sufficient. In this case, let's say we want the robot to expect an obstacle at least once every 10 centimeters, therefore the period should be at most 100 ms. For safety, we could reduce this time to 80 ms. The timing budget is the programmed time needed by the sensor to perform and report ranging measurement data, and it should be shorter than the intermeasurement period. Therefore we could possibly choose a timing budget of around 30-50 ms.
+
+### Additional Task 3: Signal and Sigma
+
 
 ## Lab 3(b): IMU
 
