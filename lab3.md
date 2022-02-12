@@ -12,7 +12,7 @@ In addition, the I2C addresses for the ToF sensors are the same (0x52). The addr
 ## Lab 3(a): Time of Flight Sensors
 First, I installed the SparkFun VL53L1X 4m laser distance sensor library in Arduino, and I connect one of the VL53L1X breakout boards to the Artemis board using the QWIIC-to-cable connector. I used daisy chaining to connect the other ToF sensor and IMU as well, and these components were sautered together. I ran out of time during my lab session, so I finished soldering in the Maker Lab in Philips Hall.
 
-<img src=https://github.com/lyl24/lyl24-ece4960/blob/gh-pages/images/lab3/solder%20progress.JPG width="150">
+<img src=https://drive.google.com/drive/folders/1cCWuj-HjQs9qjjyBfEFDT1tWZdUVHIrK width="150">
 
 As seen below, the boards are hooked up in the following order: Artemis Nano -> ToF sensor #1 -> IMU -> ToF sensor #2. The XSHUT pin on ToF sensor #1 is connected to pin 8 on the Artemis board.
 
@@ -155,7 +155,7 @@ Scanning... (port: 0x10001190), time (ms): 184
 	No device detected!
 ```
 
-This result does not match what I expected. I expected to find the sensors with the addresses 0x52 (ToF) and 0x69 (IMU), however it says that no device is detected. This is a bit strange, since the first ToF sensor in the daisy chain can successfully detect distance.
+This result does not match what I expected. I expected to find the sensors with the addresses 0x52 (ToF) and 0x69 (IMU), however it says that no device is detected. This is a bit strange, since the ToF sensor is still able to successfully detect the distance in the following steps.
 
 ### Task 2: ToF Sensor Modes
 The ToF sensor has three modes that optimize the ranging performance given the maximum expected range (```.setDistanceModeShort()```; ```.setDistanceModeMedium()```; ```.setDistanceModeLong()```). The short distance mode (1.3 m) would be best for quickly scanning the space immediately in front of the robot, since it would not have to wait as long as the medium and long modes for a return signal. However, it would not be able to see objects further ahead, possibly preventing the robot from being able to easily avoid obstacles. The long distance mode (4 m) would theoretically be the opposite -- it will be able to see objects further ahead and easily change its route to avoid these obstacles, however, it would take more time to measure longer distances. The medium distance mode (3 m) is a compromise between the short and long distance modes, and this could be the best option for the robot. Given the speed at which the robot is intended to go, this mode would allow the robot to sufficiently see obstacles up ahead and allow for quick sensing.
