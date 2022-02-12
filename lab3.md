@@ -161,9 +161,15 @@ This result does not match what I expected. I expected to find the sensors with 
 The ToF sensor has three modes that optimize the ranging performance given the maximum expected range (```.setDistanceModeShort()```; ```.setDistanceModeMedium()```; ```.setDistanceModeLong()```). The short distance mode (1.3 m) would be best for quickly scanning the space immediately in front of the robot, since it would not have to wait as long as the medium and long modes for a return signal. However, it would not be able to see objects further ahead, possibly preventing the robot from being able to easily avoid obstacles. The long distance mode (4 m) would theoretically be the opposite -- it will be able to see objects further ahead and easily change its route to avoid these obstacles, however, it would take more time to measure longer distances. The medium distance mode (3 m) is a compromise between the short and long distance modes, and this could be the best option for the robot. Given the speed at which the robot is intended to go, this mode would allow the robot to sufficiently see obstacles up ahead and allow for quick sensing.
 
 ### Task 3: Test ToF Sensor Mode
-Using the “..\Arduino\libraries\SparkFun_VL53L1X_4m_Laser_Distance_Sensor\examples\Example1_ReadDistance” example and a ruler, I tested out the medium distance mode and documented the ToF sensor range, accuracy, repeatability, and ranging time. 
+Using the “..\Arduino\libraries\SparkFun_VL53L1X_4m_Laser_Distance_Sensor\examples\Example1_ReadDistance” example and a ruler, I tested out ToF sensor and documented the sensor range, accuracy, repeatability, and ranging time. Upon reading the documentation for this example, I found that there are only short and long distance modes, and no medium distance mode. I ended up using the long distance mode since its range is closer to 3 m. To measure the distance, I set out a tape measure on the ground, pinned the ToF sensor to the back of my laptop using a ukulele capo, and measured the distance to a box.
 
-Check and discuss whether the sensor is sensitive to different colors and textures.
+![Distance Measurement 1](images/lab3/tof setup 1.JPG)
+
+![Distance Measurement 2](images/lab3/tof setup 2.JPG)
+
+
+
+I also measured the distance to objects with different colors and textures. The measurements for a brown cardboard box versus a white wall did not differ very much, and the the sensor is not too sensitive to different textures, as long as the surface is reasonably flat. For all measurements, the accuracy dropped quickly once the distance reached above 1 m, and the sensor would usually underestimate the distances.
 
 ### Task 4: Two ToF Sensors
 Using notes from the pre-lab, hook up both ToF sensors simultaneously and demonstrate that both works.
