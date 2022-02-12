@@ -12,7 +12,7 @@ In addition, the I2C addresses for the ToF sensors are the same (0x52). The addr
 ## Lab 3(a): Time of Flight Sensors
 First, I installed the SparkFun VL53L1X 4m laser distance sensor library in Arduino, and I connect one of the VL53L1X breakout boards to the Artemis board using the QWIIC-to-cable connector. I used daisy chaining to connect the other ToF sensor and IMU as well, and these components were sautered together. I ran out of time during my lab session, so I finished soldering in the Maker Lab in Philips Hall.
 
-<img src=images/lab3/solder progress.JPG width="150">
+<img src=https://github.com/lyl24/lyl24-ece4960/blob/gh-pages/images/lab3/solder%20progress.JPG width="150">
 
 As seen below, the boards are hooked up in the following order: Artemis Nano -> ToF sensor #1 -> IMU -> ToF sensor #2. The XSHUT pin on ToF sensor #1 is connected to pin 8 on the Artemis board.
 
