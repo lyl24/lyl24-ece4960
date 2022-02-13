@@ -7,7 +7,7 @@ Before starting this lab, I needed to figure out a plan for the wiring on the ro
 
 Originally, I thought about putting both ToF sensors on the front of the robot, each at a slight outward angle. Since each ToF sensor has a field of view (FoV) of approximately 27 degrees, placing them at an angle would theoretically help expand the total FoV. However, I later learned in lab that this setup would not only be redundant, it could also cause interference between the two sensors. Therefore, I decided to have one sensor on the front and one on the side of the robot. The gyroscope will be placed on a flat surface near the center of the robot, though I also have to be careful about not putting it too close to the motors as this would lead to elecromagnetic interference.
 
-In addition, the I2C addresses for the ToF sensors are the same (0x52). The address is hardwired onto the board I would not be able to address the two sensors individually as is. To solve this, I chose to connect the shutdown pin on one of the ToF sensors to the Artemis board, and this will allow me to change the address programmatically upon startup. (First, use the shutdown pin to shut down one of the sensors, then change the address on the active sensor.) I chose this option over enabling the two sensors separately through their respective shutdown pins because I thought it would be easier for me to address this problem through code.
+In addition, the I2C addresses for the ToF sensors are the same (0x52). The address is hardwired onto the board I would not be able to address the two sensors individually as is. To solve this, I chose to connect the shutdown pins on both of the ToF sensors to the Artemis board, and this will allow me to change the address programmatically upon startup later. I chose this option over enabling the two sensors separately through their respective shutdown pins because I thought it would be easier for me to address this problem through code.
 
 ## Lab 3(a): Time of Flight Sensors
 First, I installed the SparkFun VL53L1X 4m laser distance sensor library in Arduino, and I connect one of the VL53L1X breakout boards to the Artemis board using the QWIIC-to-cable connector. I used daisy chaining to connect the other ToF sensor and IMU as well, and these components were sautered together. I ran out of time during my lab session, so I finished soldering in the Maker Lab in Phillips Hall. (The image below shows the work in progress.)
@@ -40,7 +40,79 @@ From these results, we can see that the sensors can detect between 0 to 2 meters
 I also measured the distance to objects with different colors and textures. The measurements for a brown cardboard box versus a white wall did not differ very much, and the the sensor is not too sensitive to different textures, as long as the surface is reasonably flat. For all measurements, the accuracy dropped quickly once the distance reached above 1 m, and the sensor would usually underestimate the distances.
 
 ### Task 4: Two ToF Sensors
-After hooking up both of the ToF sensors using daisy chaining, I used the shutdown pin on one sensor to temporarily disable it. Next, I changed the I2C address of the second ToF sensor, then reactivated the first ToF sensor. Now, both sensors have different I2C addresses and both can be used at the same time.
+After hooking up both of the ToF sensors using daisy chaining, I used the shutdown pins to enable sensor #1 and disable sensor #2. I changed the I2C address on sensor #1 to 0x50, then turned both sensors back on. Now, both sensors have different I2C addresses and both can be used at the same time. The setup code to change the I2C address is as follows:
+
+```
+SFEVL53L1X distanceSensor1;
+SFEVL53L1X distanceSensor2;
+
+void setup(void)
+{
+  Wire.begin();
+
+  Serial.begin(115200);
+  Serial.println("VL53L1X Qwiic Test");
+
+  pinMode(7, OUTPUT);
+  digitalWrite(7, HIGH);
+
+  pinMode(8, OUTPUT);
+  digitalWrite(8, LOW);
+
+  distanceSensor1.begin();
+  distanceSensor1.setI2CAddress(0x50);
+
+  if(distanceSensor1.begin() == false) Serial.println("Sensor 1 connect failed");
+
+  digitalWrite(8, HIGH);
+  distanceSensor2.begin();
+
+  if(distanceSensor1.begin() == false) Serial.println("Sensor 1 connect failed");
+}
+```
+
+Then, for the main loop, I doubled all distance-finding equations:
+
+```
+void loop(void)
+{
+  distanceSensor1.startRanging(); //Write configuration bytes to initiate measurement
+  distanceSensor2.startRanging();
+  
+  while (!distanceSensor1.checkForDataReady() && !distanceSensor2.checkForDataReady())
+  {
+    delay(1);
+  }
+  int distance1 = distanceSensor1.getDistance(); //Get the result of the measurement from the sensor
+  int distance2 = distanceSensor2.getDistance();
+  distanceSensor1.clearInterrupt();
+  distanceSensor2.clearInterrupt();
+  distanceSensor1.stopRanging();
+  distanceSensor2.stopRanging();
+  
+
+  Serial.print("Distance1(mm): ");
+  Serial.print(distance1);
+  Serial.print("Distance2(mm): ");
+  Serial.print(distance2);
+
+  float distanceInches1 = distance1 * 0.0393701;
+  float distanceInches2 = distance2 * 0.0393701;
+  float distanceFeet1 = distanceInches1 / 12.0;
+  float distanceFeet2 = distanceInches2 / 12.0;
+
+  Serial.print("\tDistance1(ft): ");
+  Serial.print(distanceFeet1, 2);
+  Serial.print("\tDistance2(ft): ");
+  Serial.print(distanceFeet2, 2);
+
+  Serial.println();
+}
+```
+
+When running the final code, both sensors can be seen working as pictured below:
+
+![Double Sensors](images/lab3/double sensors.PNG)
 
 ### Additional Task 1: Infrared Sensors
 Many distance sensors are based on infrared trasmission, and there are two types of infrared sensors: active IR sensors emit and receive infrared radiation to detect motion and proximity, while passive IR sensors receive natural infrared radiation from nearby objects and are activated when there is a change in the IR waves in the environment. Active IR sensors are good for robotics, while passive IR sensors are good for detecting the movement of people, animals, and objects.
