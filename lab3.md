@@ -171,7 +171,7 @@ The results for the measurements are as follows:
 
 ![Distance readings](images/lab3/distance readings.PNG)
 
-From these results, we can see that the sensors can detect between 0 to 2 meters with reasonable accuracy, however the accuracy is lower as the distance increases. The precision/repeatability also decreases as the distance increases, as seen from the increased standard deviation. 
+From these results, we can see that the sensors can detect between 0 to 2 meters with reasonable accuracy, however the accuracy is lower as the distance increases. The precision/repeatability also decreases as the distance increases, as seen from the increased standard deviation. To find the ranging time, I used Example 3 (Status and Rate) from the same library of example functions and took the difference between the start of ranging time and end of ranging time. The ranging time varied between 60-100 ms.
 
 I also measured the distance to objects with different colors and textures. The measurements for a brown cardboard box versus a white wall did not differ very much, and the the sensor is not too sensitive to different textures, as long as the surface is reasonably flat. For all measurements, the accuracy dropped quickly once the distance reached above 1 m, and the sensor would usually underestimate the distances.
 
