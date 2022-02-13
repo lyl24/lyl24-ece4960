@@ -16,7 +16,7 @@ First, I installed the SparkFun VL53L1X 4m laser distance sensor library in Ardu
 
 As seen below, the boards are hooked up in the following order: Artemis Nano -> ToF sensor #1 -> IMU -> ToF sensor #2. The XSHUT pin on ToF sensor #1 is connected to pin 7 on the Artemis board, and the XSHUT pin on ToF sensor #2 is connected to pin 8.
 
-![Complete Solder](images/lab3/shutdown wires.JPG)
+![Complete Solder](images/lab3/shutdown wires.jpg)
 
 ### Task 1: Scan the I2C channel to find the sensor
 To do this, I went to File->Examples->Wire and opened Example1_wire, and I updated the pin numbers: SDA corresponds to pin D17, and SCL corresponds to pin D18. I ran the code, and it displayed that every address was detected. This result does not match what I expected - I expected to find the a ToF sensors with the address 0x52. However, I was informed that this is normal if both ToF sensors are connected at the same time, and at this point I had already connected all my sensors and finished soldering. 
