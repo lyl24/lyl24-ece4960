@@ -10,13 +10,13 @@ Originally, I thought about putting both ToF sensors on the front of the robot, 
 In addition, the I2C addresses for the ToF sensors are the same (0x52). The address is hardwired onto the board I would not be able to address the two sensors individually as is. To solve this, I chose to connect the shutdown pin on one of the ToF sensors to the Artemis board, and this will allow me to change the address programmatically upon startup. (First, use the shutdown pin to shut down one of the sensors, then change the address on the active sensor.) I chose this option over enabling the two sensors separately through their respective shutdown pins because I thought it would be easier for me to address this problem through code.
 
 ## Lab 3(a): Time of Flight Sensors
-First, I installed the SparkFun VL53L1X 4m laser distance sensor library in Arduino, and I connect one of the VL53L1X breakout boards to the Artemis board using the QWIIC-to-cable connector. I used daisy chaining to connect the other ToF sensor and IMU as well, and these components were sautered together. I ran out of time during my lab session, so I finished soldering in the Maker Lab in Phillips Hall.
+First, I installed the SparkFun VL53L1X 4m laser distance sensor library in Arduino, and I connect one of the VL53L1X breakout boards to the Artemis board using the QWIIC-to-cable connector. I used daisy chaining to connect the other ToF sensor and IMU as well, and these components were sautered together. I ran out of time during my lab session, so I finished soldering in the Maker Lab in Phillips Hall. (The image below shows the work in progress.)
 
 ![Solder Progress](images/lab3/solder progress.JPG)
 
-As seen below, the boards are hooked up in the following order: Artemis Nano -> ToF sensor #1 -> IMU -> ToF sensor #2. The XSHUT pin on ToF sensor #1 is connected to pin 8 on the Artemis board.
+As seen below, the boards are hooked up in the following order: Artemis Nano -> ToF sensor #1 -> IMU -> ToF sensor #2. The XSHUT pin on ToF sensor #1 is connected to pin 7 on the Artemis board, and the XSHUT pin on ToF sensor #2 is connected to pin 8.
 
-![Complete Solder](images/lab3/complete solder.JPG)
+![Complete Solder](images/lab3/shutdown wires.JPG)
 
 ### Task 1: Scan the I2C channel to find the sensor
 To do this, I went to File->Examples->Wire and opened Example1_wire, and I updated the pin numbers: SDA corresponds to pin D17, and SCL corresponds to pin D18. I ran the code, and it displayed that every address was detected. This result does not match what I expected - I expected to find the a ToF sensors with the address 0x52. However, I was informed that this is normal if both ToF sensors are connected at the same time, and at this point I had already connected all my sensors and finished soldering. 
@@ -25,7 +25,7 @@ To do this, I went to File->Examples->Wire and opened Example1_wire, and I updat
 The ToF sensor has three modes that optimize the ranging performance given the maximum expected range (```.setDistanceModeShort()```; ```.setDistanceModeMedium()```; ```.setDistanceModeLong()```). The short distance mode (1.3 m) would be best for quickly scanning the space immediately in front of the robot, since it would not have to wait as long as the medium and long modes for a return signal. However, it would not be able to see objects further ahead, possibly preventing the robot from being able to easily avoid obstacles. The long distance mode (4 m) would theoretically be the opposite -- it will be able to see objects further ahead and easily change its route to avoid these obstacles, however, it would take more time to measure longer distances. The medium distance mode (3 m) is a compromise between the short and long distance modes, and this could be the best option for the robot. Given the speed at which the robot is intended to go, this mode would allow the robot to sufficiently see obstacles up ahead and allow for quick sensing.
 
 ### Task 3: Test ToF Sensor Mode
-Using the “..\Arduino\libraries\SparkFun_VL53L1X_4m_Laser_Distance_Sensor\examples\Example1_ReadDistance” example and a ruler, I tested out ToF sensor and documented the sensor range, accuracy, repeatability, and ranging time. Upon reading the documentation for this example, I found that there are only short and long distance modes, and no medium distance mode. I ended up using the long distance mode since its range is closer to 3 m. To measure the distance, I set out a tape measure on the ground, pinned the ToF sensor to the back of my laptop using a ukulele capo, and measured the distance to a box.
+Using the SparkFun read distance example and a ruler, I tested out ToF sensor and documented the sensor range, accuracy, repeatability, and ranging time. Upon reading the documentation for this example, I found that there are only short and long distance modes, and no medium distance mode. I ended up using the long distance mode since its range is closer to 3 m. To measure the distance, I set out a tape measure on the ground, pinned the ToF sensor to the back of my laptop using a ukulele capo, and measured the distance to a box.
 
 ![Distance Measurement 1](images/lab3/tof setup 1.JPG)
 
@@ -60,10 +60,9 @@ I do not know how fast the robot will be, but based on the speed of the unaltere
 ## Lab 3(b): IMU
 
 ## Setup the IMU
-First, I installed the SparkFun 9DOF IMU Breakout - ICM 20948 - Arduino Library. After scanning the I2C channel in the same way as the ToF sensor, I found that _____.
+First, I installed the SparkFun 9DOF IMU Breakout - ICM 20948 - Arduino Library. After scanning the I2C channel in the same way as the ToF sensor, I found that every address was printed again, though the sensor still works properly in later parts of this lab.
 
-AD0_VAL is the value of the last bit of the I2C address. The default is 1, and when the ADR jumper is closed, the value becomes 0. If the IMU is working properly, it should be a 0.
-
+AD0_VAL is the value of the last bit of the I2C address. The default is 1, and when the ADR jumper is closed, the value becomes 0. In the IMU sensor code, I changed the value from 0 to 1 in order to get the sensor to work.
 
 ## Accelerometer
 
