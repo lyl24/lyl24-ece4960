@@ -127,7 +127,7 @@ Source: [https://www.getkisi.com/guides/infrared-sensors](https://www.getkisi.co
 I do not know how fast the robot will be, but based on the speed of the unaltered robot, I will estimate the speed of the modified robot to be about 1 m/s. With this in mind, the intermeasurement period (the delay between two ranging operations) should not be too long, or else the robot will outrun the sensor. The intermeasurement period would also depend on the environment -- an environment with many obstacles would require a shorter intermeasurement period, while a longer intermeasurement period for open spaces would be sufficient. In this case, let's say we want the robot to expect an obstacle at least once every 10 centimeters, therefore the period should be at most 100 ms. For safety, we could reduce this time to 80 ms. The timing budget is the programmed time needed by the sensor to perform and report ranging measurement data, and it should be shorter than the intermeasurement period. Therefore we could possibly choose a timing budget of around 30-50 ms.
 
 ### Additional Task 3: Signal and Sigma
-
+Signal and sigma are used to check the quality of the measurements, and if they are outside the set limits, the ranging is flagged as invalid. The signal rate measurement represnts the amplitude of the signal that is reflected from the target and detected by the device, and when waving my hand very quickly in front of the sensors, the signal value shoots up. Sigma (mm) is the estimation of the standard deviation for the measurements, and this measurement also increases with quick motions. These results indicate that sudden movements can lead to higher uncertainty in distance-measuring and can lead to errors.
 
 ## Lab 3(b): IMU
 
