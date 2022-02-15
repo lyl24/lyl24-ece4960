@@ -166,9 +166,9 @@ In an ideal low pass filter, any values above the cutoff frequency will be atten
 For the gyroscope, I ran out of time to implement the equations to convert gyroscope information into roll, pitch, and yaw. However, here is a brief explanation of how to do it.
 
 Equations:
-θg = θg – gyr_reading x dt
-Φg = Φg - gyr_reading x dt
-Ψg = Ψg - gyr_reading x dt
+θg = θg – gyr_reading x dt,
+Φg = Φg - gyr_reading x dt,
+Ψg = Ψg - gyr_reading x dt,
 
 ...where the values on the left side of the equations represent current angles, the first values on the right side of the equalities equals to the previous angle measurements, the gyr_reading is the rate of change of angle, and dt is the time passed since the previous reading. Using these equations, we can use the rate of change in angle and the time elapsed to find the total change in angle, then add this to the old value to gain the new value. 
 
