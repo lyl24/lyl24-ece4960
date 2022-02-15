@@ -141,7 +141,7 @@ AD0_VAL is the value of the last bit of the I2C address. The default is 1, and w
 The data for the accelerometer and gyroscope can be viewed using serial plotter as seen above. In the left half of the image, I waved the IMU back and forth on the x, y, and z axes, and this produced a sinusoidal shape with high frequency. On the right half of the image, I rotated the IMU on all axes, and it showed a larger sinusoidal shape with small fluctuations in the curve.
 
 ## Accelerometer
-To convert accelerometer data into pitch and roll, I added the following code from the example IMU code:
+To convert accelerometer data into pitch and roll, I added the following code from the example IMU code into the printScaledAGMT function:
 
 ```
 SERIAL_PORT.print(" ], Roll (Phi) [ ");
@@ -156,8 +156,38 @@ As a result, I was able to reasonably measure {-90, 0, 90} degrees pitch and rol
 
 The IMU measurements are reasonably accurate (especially considering human errors in centering the sensor), and the output values did not differ from the expected values by more than a few degrees.
 
+Next, I took a look at the section on tapping the sensor and plotting the frequency response. I input all of the code from the tutorial into a Jupyter notebook and was able to get the same results. However, I could not figure out how to plot the frequency response from the data received by the IMU, but I have included a picture below to show what the serial plotter displays when I tap the sensor. Each of the large spikes represents a tap.
+
+![Tapping](images/lab3/tapping on the sensor.png)
+
+In an ideal low pass filter, any values above the cutoff frequency will be attenuated. In this case, abnormally high frequencies will be generated from taps and other bumpy motions, and the cutoff frequency should be determined in order to make the measurements as robust and insensitive to these bumps as possible. Not taking this problem into consideration can lead to false measurements and accumulation in measurement errors.
+
 ## Gyroscope
+For the gyroscope, I ran out of time to implement the equations to convert gyroscope information into roll, pitch, and yaw. However, here is a brief explanation of how to do it.
+
+Equations:
+θg = θg – gyr_reading x dt
+Φg = Φg - gyr_reading x dt
+Ψg = Ψg - gyr_reading x dt
+
+...where the values on the left side of the equations represent current angles, the first values on the right side of the equalities equals to the previous angle measurements, the gyr_reading is the rate of change of angle, and dt is the time passed since the previous reading. Using these equations, we can use the rate of change in angle and the time elapsed to find the total change in angle, then add this to the old value to gain the new value. 
 
 ## Additional Task: Magnetometer
+Similar to the earlier examples, I inserted the following code into the IMU program:
+
+```
+SERIAL_PORT.print(" ], Yaw [ ");
+Serial.print((atan2(sensor->magY(),sensor->magX()))*180/M_PI);
+```
+
+I also tried the following code, which was given in the lab explanation:
+
+```
+xm = myICM.magX()*cos(pitch) - myICM.magY()*sin(roll)*sin(pitch) + myICM.magZ()*cos(roll)*sin(pitch); //these were saying theta=pitch and roll=phi 
+ym = myICM.magY()*cos(roll) + myICM.magZ()*sin(roll_rad); 
+yaw = atan2(ym, xm);
+```
+
+The yaw value changes when I rotate about the z-axis (keeping the IMU horizontal), and I also found that the value is robust to small changes in pitch. The value reached the lowest value when it was pointed in the general direction of North Campus, so I assume magnetic north is also around that direction.
 
 ### [Click here to return to homepage](https://lyl24.github.io/lyl24-ece4960)
