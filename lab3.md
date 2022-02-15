@@ -136,7 +136,25 @@ First, I installed the SparkFun 9DOF IMU Breakout - ICM 20948 - Arduino Library.
 
 AD0_VAL is the value of the last bit of the I2C address. The default is 1, and when the ADR jumper is closed, the value becomes 0. In the IMU sensor code, I changed the value from 0 to 1 in order to get the sensor to work.
 
+![IMU data](images/lab3/imu data.png)
+
+The data for the accelerometer and gyroscope can be viewed using serial plotter as seen above. In the left half of the image, I waved the IMU back and forth on the x, y, and z axes, and this produced a sinusoidal shape with high frequency. On the right half of the image, I rotated the IMU on all axes, and it showed a larger sinusoidal shape with small fluctuations in the curve.
+
 ## Accelerometer
+To convert accelerometer data into pitch and roll, I added the following code from the example IMU code:
+
+```
+SERIAL_PORT.print(" ], Roll (Phi) [ ");
+Serial.print((atan2(sensor->accY(),sensor->accZ()))*180/M_PI);
+SERIAL_PORT.print(" ], Pitch (Theta) [ ");
+Serial.print((atan2(sensor->accX(),sensor->accZ()))*180/M_PI);
+```
+
+As a result, I was able to reasonably measure {-90, 0, 90} degrees pitch and roll, which can be seen in the video below. (I tried to show both the sensor arrangement and serial monitor output, and this resulted in unclear video quality. The values can still be seen when zooming in and slowing down the video -- my apologies.)
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/uxThXOTAfx4" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+The IMU measurements are reasonably accurate (especially considering human errors in centering the sensor), and the output values did not differ from the expected values by more than a few degrees.
 
 ## Gyroscope
 
