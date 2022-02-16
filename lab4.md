@@ -15,19 +15,26 @@ Next, we can move on to testing the capabilities of the RC car. The car is power
 ![Car](images/lab4/car.jpg)
 
 ### Dimensions and Weight
+Knowing the dimensions of the car can help us determine where the car can fit. The car is quite short and wide, so it could fit under things very well (like a Roomba).
 
+| Dimension  | Measurement |
+| ------------- | ------------- |
 | Length (including wheels) | 18 cm |
 | Width (including wheels) | 14.2 cm |
 | Height (including wheels) | 8 cm |
 | Length (chassis) | 14.2 cm |
 | Width (chassis) | 7.3 cm |
 | Height (chassis) | 5 cm |
-| Weight | ___ |
+
+In addition, the weight of the car with just the battery is ___ . Given that the car is pretty short and wide, the center of mass is low to the ground, and it is difficult for the car to flip over onto its side. 
 
 ### Batteries
+Measuring the battery life and time to full charge provides valuable information on how long we can drive the car and how long we have to wait for it to get to full charge again.
 
+| Trial  | Time |
+| ------------- | ------------- |
 | Battery Life | 8:11 (when only turning in circles) |
-| Time to full charge | a really long time |
+| Time to full charge | a really long time, like overnight |
 
 ### Drifting Distance
 I wanted to measure the distance that it takes for the car to drift to a stop after releasing the driving buttons. Understanding how far the car moves after releasing all controls is helpful for improving the accuracy of the car's movements. For example, if the car is driving forward autonomously and we want it to suddenly stop after 5 meters, we would need to tell it to stop before 5 meters so that it can drift the rest of the way and not overshoot the distance.
@@ -55,6 +62,26 @@ I set up the experiment in the same way as before, however instead of releasing 
 | 4 | 75 cm |
 | 5 | 70 cm |
 
+### Surfaces
+After experimenting on the tiled floors of Phillips Hall, I determined that the car can drive very well on smooth, flat surfaces. Next, I brought the car home and tested it out on an uneven, gravelly surface.
+
+(Insert video)
+
+Analysis
+
+Then, I tested it out on uneven ground with grass, as well as snow.
+
+(Insert video)
+
+Analysis
+
+### Turning around its own axis
+
+### How reliably can we control the car with manual control?
+Not well.
+
+#### Stunts
+It can kind of do a wheelie for half a second.
 
 
 ### [Click here to return to homepage](https://lyl24.github.io/lyl24-ece4960)
