@@ -75,7 +75,7 @@ Not well.
 #### Minimum movements
 I wanted to see the minimum amount of distance the car would move for each press of the button, and this can help me determine how accurately the car can move to a set point. In the video below, each movement that the car makes is a result of me pressing and releasing a button on the remote control as fast as possible.
 
-<iframe width="900" height="506" src="https://www.youtube.com/embed/KjNWOe5mS9g" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/KjNWOe5mS9g" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 From the results of this experiment, we can see that the car isn't very accurate with moving small distances. Each forward/backward motion moves it along about 1 foot, and each turning motion results in an angle change of about 45 degrees.
 
@@ -86,16 +86,16 @@ The car can spin in circles quite quickly (about 3-4 revolutions per second), ho
 
 While it's great that the car is so speedy, being able to turn this fast also has its cons. As seen in the above sections, it is difficult to get the car to turn at angles smaller than 45 degrees. When the car is moving forward and backward at full speed, precise turning becomes even harder. If the left/right button is held for a split-second too long, the car starts spinning out of control. In the video below, I tapped the right turn button while holding down the forward drive button, and the car managed to make a nice right turn into the wall.
 
-<iframe width="900" height="506" src="https://www.youtube.com/embed/YKHUO3S4oDo" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/YKHUO3S4oDo" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 #### Stunts
 Since the car is relatively flat and its center of mass is low to the ground, it is difficult to drive the car on less than 4 wheels at a time. However, it can kind of do a wheelie for half a second. To pull off this "stunt," I first drove the car forward at full speed, then held down the backward button for about 0.5-1 second. I found that if you don't hold down the back button for long enough, the car cannot get the front wheels off the ground, and if you hold down the button for too long, the car will start doing uncontrolled back flips.
 
-<iframe width="900" height="506" src="https://www.youtube.com/embed/4xadAjNHDRk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/4xadAjNHDRk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 On the remote control, there is a button on the top that does not control forward/backward and left/right, and I assume it's a "stunt" button. Pressing this button will cause the car to drive erratically for 5-10 seconds, which was interesting but also terrifying whenever I pressed the button on accident.
 
-<iframe width="900" height="506" src="https://www.youtube.com/embed/YdDmvW_l614" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/YdDmvW_l614" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 Sometimes, the seemingly random movements end up looking kind of like stunts, but I'm not sure.
 
