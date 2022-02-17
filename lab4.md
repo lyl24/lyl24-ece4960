@@ -84,7 +84,7 @@ The car can spin in circles quite quickly (about 3-4 revolutions per second), ho
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/JtHuIG-RybE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
-While it's great that the car is so speedy, being able to turn this fast also has its cons. As seen in the above sections, it is difficult to get the car to turn at angles smaller than 45 degrees. When the car is moving forward and backward at full speed, precise turning becomes even harder. If the left/right button is held for a split-second too long, the car starts spinning out of control. In the video below, I tapped the right turn button while holding down the forward drive button, and the car managed to make a nice right turn into the wall.
+While it's great that the car is so speedy, being able to turn this fast also has its cons. As seen above, it is difficult to get the car to turn at angles smaller than 45 degrees. When the car is moving forward and backward at full speed, precise turning becomes even harder. If the left/right button is held for a split-second too long, the car starts spinning out of control. In the video below, I tapped the right turn button while holding down the forward drive button, and the car managed to make a nice right turn into the wall.
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/YKHUO3S4oDo" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
