@@ -80,7 +80,7 @@ I wanted to see the minimum amount of distance the car would move for each press
 From the results of this experiment, we can see that the car isn't very accurate with moving small distances. Each forward/backward motion moves it along about 1 foot, and each turning motion results in an angle change of about 45 degrees.
 
 #### Turning around its own axis
-The car can spin in circles quite quickly (about 3-4 revolutions per second), however, it does not spin in the same spot and starts to drift away. 
+The car can spin in circles quite quickly (about 3-4 revolutions per second), however, it does not spin in the same spot and starts to drift away. The following video was recording at 240 fps, which is 0.25x regular speed.
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/JtHuIG-RybE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
