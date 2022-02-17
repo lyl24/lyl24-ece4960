@@ -97,6 +97,6 @@ On the remote control, there is a button on the top that does not control forwar
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/YdDmvW_l614" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
-Sometimes, the seemingly random movements end up looking kind of like stunts, but I'm not sure.
+Sometimes, the seemingly random movements ended up looking kind of like stunts, but I'm not sure.
 
 ### [Click here to return to homepage](https://lyl24.github.io/lyl24-ece4960)
