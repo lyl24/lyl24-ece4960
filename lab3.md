@@ -156,9 +156,18 @@ As a result, I was able to reasonably measure {-90, 0, 90} degrees pitch and rol
 
 The IMU measurements are reasonably accurate (especially considering human errors in centering the sensor), and the output values did not differ from the expected values by more than a few degrees.
 
-Next, I took a look at the section on tapping the sensor and plotting the frequency response. I input all of the code from the tutorial into a Jupyter notebook and was able to get the same results. However, I could not figure out how to plot the frequency response from the data received by the IMU, but I have included a picture below to show what the serial plotter displays when I tap the sensor. Each of the large spikes represents a tap.
+Next, I tried tapping the sensor and plotting the frequency response. I used this [MATLAB tutorial on fast Fourier transforms](https://www.mathworks.com/help/matlab/ref/fft.html) to help with this part. First, I altered the Arduino code so that it would output the pitch in way that I could easily copy into MATLAB. Next, I plotted a graph for pitch vs time.
 
-![Tapping](images/lab3/tapping on the sensor.png)
+![Pitch vs Time](images/lab3/pitch vs time graph.png)
+
+Then, I ran the MATLAB code to create a graph for the frequency domain signal. (I used the fftshift function to generate the following graph instead of the fft function given in the example code.)
+
+![Frequency Domain Signal](images/lab3/frequency domain signal.png)
+
+
+
+
+
 
 In an ideal low pass filter, any values above the cutoff frequency will be attenuated. In this case, abnormally high frequencies will be generated from taps and other bumpy motions, and the cutoff frequency should be determined in order to make the measurements as robust and insensitive to these bumps as possible. Not taking this problem into consideration can lead to false measurements and accumulation in measurement errors.
 
