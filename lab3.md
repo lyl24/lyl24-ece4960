@@ -164,12 +164,7 @@ Then, I ran the MATLAB code to create a graph for the frequency domain signal. (
 
 ![Frequency Domain Signal](images/lab3/frequency domain signal.png)
 
-
-
-
-
-
-In an ideal low pass filter, any values above the cutoff frequency will be attenuated. In this case, abnormally high frequencies will be generated from taps and other bumpy motions, and the cutoff frequency should be determined in order to make the measurements as robust and insensitive to these bumps as possible. Not taking this problem into consideration can lead to false measurements and accumulation in measurement errors.
+In an ideal low pass filter, any values above the cutoff frequency will be attenuated. In this case, abnormally high frequencies will be generated from taps and other bumpy motions, and the cutoff frequency should be determined in order to make the measurements as robust and insensitive to these bumps as possible. Not taking this problem into consideration can lead to false measurements and accumulation in measurement errors. Based on the graph above, the actual signal is around the spikes, and all the smaller fluctuations are due to noise. Therefore, we could make the cutoff frequency to be around 1500 Hz and attenuate all the noise above that frequency.
 
 ## Gyroscope
 For the gyroscope, I ran out of time to implement the equations to convert gyroscope information into roll, pitch, and yaw. However, here is a brief explanation of how to do it.
