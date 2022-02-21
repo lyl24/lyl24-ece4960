@@ -166,15 +166,49 @@ Then, I ran the MATLAB code to create a graph for the frequency domain signal. (
 
 In an ideal low pass filter, any values above the cutoff frequency will be attenuated. In this case, abnormally high frequencies will be generated from taps and other bumpy motions, and the cutoff frequency should be determined in order to make the measurements as robust and insensitive to these bumps as possible. Not taking this problem into consideration can lead to false measurements and accumulation in measurement errors. Based on the graph above, the actual signal is around the spikes, and all the smaller fluctuations are due to noise. Therefore, we could make the cutoff frequency to be around 1500 Hz and attenuate all the noise above that frequency.
 
+The following equation can be used to add a low pass filter to the code: ```θLPF[n] = α*θ + (1 – α)*θLPF[n-1]```, where ```α = T/(T+RC)```. Then, the current angle is stored as the prevoius angle, ```θLPF[n-1] = θLPF[n]```, and the new angle is stored as the current angle. I found α to be about 0.5 (T = 0.001 and RC = 0.002). Using the code below, I was able to add a low pass filter:
+
+```
+current_pitch_filter = alpha*((atan2(sensor->accX(),sensor->accZ()))*180/M_PI) + (1-alpha)*old_pitch_filter;
+old_pitch_filter = current_pitch_filter;
+Serial.print("filtered pitch: ");
+Serial.print(current_pitch_filter);
+
+current_roll_filter = alpha*((atan2(sensor->accY(),sensor->accZ()))*180/M_PI) + (1-alpha)*old_roll_filter;
+old_roll_filter = current_roll_filter;
+Serial.print(" filtered roll: ");
+Serial.println(current_roll_filter);
+```
+
 ## Gyroscope
-For the gyroscope, I ran out of time to implement the equations to convert gyroscope information into roll, pitch, and yaw. However, here is a brief explanation of how to do it.
+For the gyroscope, the following equations are used to calculate each angle: ```θg = θg – gyr_reading*dt```, ```Φg = Φg - gyr_reading*dt```, ```Ψg = Ψg - gyr_reading*dt```.
 
-Equations:
-θg = θg – gyr_reading x dt,
-Φg = Φg - gyr_reading x dt,
-Ψg = Ψg - gyr_reading x dt,
+In the code, I found dt (time elapsed between measurements) by using the ```millis()``` function before and after getting each measurement. Then, I found the difference between the current and previous gyroscope readings, which are given as rates of change in the angle. I multiplied these values by the time elapsed to find the total angle change during the time elapsed, and then calculated the updated angle.
 
-...where the values on the left side of the equations represent current angles, the first values on the right side of the equalities equals to the previous angle measurements, the gyr_reading is the rate of change of angle, and dt is the time passed since the previous reading. Using these equations, we can use the rate of change in angle and the time elapsed to find the total change in angle, then add this to the old value to gain the new value. 
+```
+dt = (current_time - previous_time)*0.001;
+  
+current_gyrX = previous_gyrX - (sensor->gyrX())*dt;
+previous_gyrX = current_gyrX;
+
+current_gyrY = previous_gyrY - (sensor->gyrY())*dt;
+previous_gyrY = current_gyrY;
+
+current_gyrZ = previous_gyrZ - (sensor->gyrZ())*dt;
+previous_gyrZ = current_gyrZ;
+Serial.print("current gyr X: ");
+Serial.print(current_gyrX);
+Serial.print(" current gyr Y: ");
+Serial.println(current_gyrY);
+Serial.print(" current gyr Z: ");
+Serial.print(current_gyrZ);
+```
+
+After uploading this code to the board, I found that the starting angles on all axes depended on the starting position of the IMU sensor. When I turn and flip the IMU around, it can determine the angle from the starting position pretty well. Next, I compared the pitch and roll values between the accelerometer and gyroscope.
+
+I angled the sensor so that the pitch and roll values would be approximately the same at the beginning (top image), but over time, these values began to drift apart (bottom image). To address the problem with drift, a complementary low pass filter can be added using the following equation: ```θ = (θ + θg*dt)(1-α) + θaα```. This can be implemented in 
+
+
 
 ## Additional Task: Magnetometer
 Similar to the earlier examples, I inserted the following code into the IMU program:
