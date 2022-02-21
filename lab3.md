@@ -169,15 +169,15 @@ In an ideal low pass filter, any values above the cutoff frequency will be atten
 The following equation can be used to add a low pass filter to the code: ```θLPF[n] = α*θ + (1 – α)*θLPF[n-1]```, where ```α = T/(T+RC)```. Then, the current angle is stored as the prevoius angle, ```θLPF[n-1] = θLPF[n]```, and the new angle is stored as the current angle. I found α to be about 0.5 (T = 0.001 and RC = 0.002). Using the code below, I was able to add a low pass filter:
 
 ```
-current_pitch_filter = alpha*((atan2(sensor->accX(),sensor->accZ()))*180/M_PI) + (1-alpha)*old_pitch_filter;
-old_pitch_filter = current_pitch_filter;
-Serial.print("filtered pitch: ");
-Serial.print(current_pitch_filter);
+current_pitch_filter_acc = alpha*((atan2(sensor->accX(),sensor->accZ()))*180/M_PI) + (1-alpha)*old_pitch_filter_acc;
+old_pitch_filter_acc = current_pitch_filter_acc;
+Serial.print(" filtered pitch (acc): ");
+Serial.print(current_pitch_filter_acc);
 
-current_roll_filter = alpha*((atan2(sensor->accY(),sensor->accZ()))*180/M_PI) + (1-alpha)*old_roll_filter;
-old_roll_filter = current_roll_filter;
-Serial.print(" filtered roll: ");
-Serial.println(current_roll_filter);
+current_roll_filter_acc = alpha*((atan2(sensor->accY(),sensor->accZ()))*180/M_PI) + (1-alpha)*old_roll_filter_acc;
+old_roll_filter_acc = current_roll_filter_acc;
+Serial.print(" filtered roll (acc): ");
+Serial.print(current_roll_filter_acc);
 ```
 
 ## Gyroscope
@@ -206,9 +206,25 @@ Serial.print(current_gyrZ);
 
 After uploading this code to the board, I found that the starting angles on all axes depended on the starting position of the IMU sensor. When I turn and flip the IMU around, it can determine the angle from the starting position pretty well. Next, I compared the pitch and roll values between the accelerometer and gyroscope.
 
-I angled the sensor so that the pitch and roll values would be approximately the same at the beginning (top image), but over time, these values began to drift apart (bottom image). To address the problem with drift, a complementary low pass filter can be added using the following equation: ```θ = (θ + θg*dt)(1-α) + θaα```. This can be implemented in 
+![Gyr compare 1](images/lab3/gyr compare 1.PNG)
 
+![Gyr compare 2](images/lab3/gyr compare 2.PNG)
 
+I angled the sensor so that the pitch and roll values would be approximately the same at the beginning (top image), but over time, these values began to drift apart (bottom image). To address the problem with drift, a complementary low pass filter can be added using the following equation: ```θ = (θ + θg*dt)(1-α) + θaα```. This can be implemented in code as follows:
+
+```
+current_pitch_filter_gyr = (old_pitch_filter_gyr + (sensor->gyrY())*dt)*(1-alpha) + current_pitch_filter_acc*alpha;
+old_pitch_filter_gyr = current_pitch_filter_gyr;
+Serial.print(" filtered pitch (gyr): ");
+Serial.print(current_pitch_filter_gyr);
+
+current_roll_filter_gyr = (old_roll_filter_gyr + (sensor->gyrX())*dt)*(1-alpha) + current_roll_filter_acc*alpha;
+old_roll_filter_gyr = current_roll_filter_gyr;
+Serial.print(" filtered roll (gyr): ");
+Serial.println(current_roll_filter_gyr);
+```
+
+After uploading this code to the board, the gyroscope angles actually stopped drifting very far from the filtered accelerometer values over time. I also tapped the sensor a couple times to see if this would have an effect, but the readings were quite stable.
 
 ## Additional Task: Magnetometer
 Similar to the earlier examples, I inserted the following code into the IMU program:
