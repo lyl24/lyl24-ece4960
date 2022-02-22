@@ -10,7 +10,9 @@ Before starting measurements, I checked that the Artemis works while being power
 After carefully verifying that all the wires were set up correctly (despite the confusing colors), I plugged in the battery while the Artemis was connected via USB to my computer, and the yellow LED lit up. This meant that the battery was being charged from the USB port, and everything was working properly.
 
 ## Testing!
-Next, we can move on to testing the capabilities of the RC car. The car is powered by an 850mAh battery, and it is controlled using a remote control.
+Next, we can move on to testing the capabilities of the RC car. For this lab, I collaborated with Syd Lawrence.
+
+The car is powered by an 850mAh battery, and it is controlled using a remote control.
 
 ![Car](images/lab4/car.jpg)
 
@@ -26,7 +28,7 @@ Knowing the dimensions of the car can help us determine where the car can fit. T
 | Width (chassis) | 7.3 cm |
 | Height (chassis) | 5 cm |
 
-In addition, the weight of the car with just the battery is ___ . Given that the car is pretty short and wide, the center of mass is low to the ground, and it is difficult for the car to flip over on its side. Since the motors are quite powerful, the car can still do front flips and back flips with ease.
+In addition, the weight of the car with just the battery is 518 grams, and this increases to 553 grams when the Artemis, sensors, wire, and 650 mAh batteries are added (these values were measured by Syd). Given that the car is pretty short and wide, the center of mass is low to the ground, and it is difficult for the car to flip over on its side. Since the motors are quite powerful, the car can still do front flips and back flips with ease.
 
 ### Batteries
 Measuring the battery life and time to full charge provides valuable information on how long we can drive the car and how long we have to wait for it to get to full charge again.
@@ -63,11 +65,11 @@ I set up the experiment in the same way as before, however instead of releasing 
 | 5 | 70 cm |
 
 ### Surfaces
-After experimenting on the tiled floors of Phillips Hall, I determined that the car can drive very well on smooth, flat surfaces. Next, I brought the car home and tested it outdoors on uneven surfaces.
+After experimenting on the tiled floors of Phillips Hall, I determined that the car can drive very well on smooth, flat surfaces. Next, I brought the car home and tested it on bumpier surfaces including my carpet and exercise mats.
 
-(Insert video)
+<iframe width="560" height="315" src="https://www.youtube.com/embed/1ZNqHmIKKfQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
-Analysis
+I found that driving on relatively flat and smooth surfaces led to longer drifting distances. In comparison, the drifting distance was much shorter while driving on carpet, and it also seems like the car does a small jump whenever it starts driving.
 
 ### How reliably can we control the car with manual control?
 Not well.
@@ -87,6 +89,11 @@ The car can spin in circles quite quickly (about 3-4 revolutions per second), ho
 While it's great that the car is so speedy, being able to turn this fast also has its cons. As seen above, it is difficult to get the car to turn at angles smaller than 45 degrees. When the car is moving forward and backward at full speed, precise turning becomes even harder. If the left/right button is held for a split-second too long, the car starts spinning out of control. In the video below, I tapped the right turn button while holding down the forward drive button, and the car managed to make a nice right turn into the wall.
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/YKHUO3S4oDo" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+#### Driving in a Square
+Next, I tried to drive the car in a 1x1 meter square. This proved to be very challenging, since the car kept overshooting the forward/backward movements and turning angles. Even when I tapped the buttons on the remote control as quickly as possible, the car would launch itself way past the position I intended for it to go. In the end, I was kind of able to make it go in a square, though it was not a very precise square.
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/BPHhJgsEsIQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 #### Stunts
 Since the car is relatively flat and its center of mass is low to the ground, it is difficult to drive the car on less than 4 wheels at a time. However, it can kind of do a wheelie for half a second. To pull off this "stunt," I first drove the car forward at full speed, then held down the backward button for about 0.5-1 second. I found that if you don't hold down the back button for long enough, the car cannot get the front wheels off the ground, and if you hold down the button for too long, the car will start doing uncontrolled back flips.
