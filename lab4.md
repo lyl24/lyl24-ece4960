@@ -36,7 +36,7 @@ Measuring the battery life and time to full charge provides valuable information
 | Trial  | Time |
 | ------------- | ------------- |
 | Battery Life | 8:11 (when only turning in circles) |
-| Time to full charge | a really long time, like overnight probably |
+| Time to full charge | a really long time (overnight) |
 
 ### Drifting Distance
 I wanted to measure the distance that it takes for the car to drift to a stop after releasing the driving buttons. Understanding how far the car moves after releasing all controls is helpful for improving the accuracy of the car's movements. For example, if the car is driving forward autonomously and we want it to suddenly stop after 5 meters, we would need to tell it to stop before 5 meters so that it can drift the rest of the way and not overshoot the distance.
@@ -91,7 +91,7 @@ While it's great that the car is so speedy, being able to turn this fast also ha
 <iframe width="560" height="315" src="https://www.youtube.com/embed/YKHUO3S4oDo" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 #### Driving in a Square
-Next, I tried to drive the car in a 1x1 meter square. This proved to be very challenging, since the car kept overshooting the forward/backward movements and turning angles. Even when I tapped the buttons on the remote control as quickly as possible, the car would launch itself way past the position I intended for it to go. In the end, I was kind of able to make it go in a square, though it was not a very precise square.
+Next, I tried to drive the car in a 1x1 meter square. This proved to be very challenging, since the car kept overshooting the forward/backward movements and turning angles. Even when I tapped the buttons on the remote control as quickly as possible, the car would launch itself way past the position I intended for it to go. In the end, I was somewhat able to make it go in a square, though it was not a very precise square.
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/BPHhJgsEsIQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
@@ -104,6 +104,6 @@ On the remote control, there is a button on the top that does not control forwar
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/YdDmvW_l614" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
-Sometimes, the seemingly random movements ended up looking kind of like stunts, but I'm not sure.
+Sometimes, the seemingly random movements ended up looking like stunts.
 
 ### [Click here to return to homepage](https://lyl24.github.io/lyl24-ece4960)
