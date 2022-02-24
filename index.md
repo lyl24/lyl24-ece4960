@@ -5,3 +5,4 @@
 ### [Lab 2: Bluetooth](https://lyl24.github.io/lyl24-ece4960/lab2)
 ### [Lab 3: Sensors](https://lyl24.github.io/lyl24-ece4960/lab3)
 ### [Lab 4: Characterize your Car](https://lyl24.github.io/lyl24-ece4960/lab4)
+### [Lab 5: Open Loop Control](https://lyl24.github.io/lyl24-ece4960/lab5)
