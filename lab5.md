@@ -111,11 +111,56 @@ For this task, I inputted different values to the car using ```analogWrite``` to
 <iframe width="560" height="315" src="https://www.youtube.com/embed/ymmHUeO0Riw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 ### Task 2: Calibration and driving in a straight line
-When driving the car in a straight line, it tended to go to the left, so I needed to implement a calibration factor. To do this, I defined a value for motor speed and a calibration variable. In the code, I multiplied the motor speed for one of the wheels by the calibration variable, which I tweaked using trial and error in order to get the car to drive straight. As seen below, the car can stay on a line while driving forward for 2m/6ft.
+When driving the car in a straight line, it tended to go to the left, so I needed to implement a calibration factor. To do this, I defined a value for motor speed and a calibration variable. In the code, I multiplied the motor speed for one of the wheels by the calibration variable, which I tweaked using trial and error in order to get the car to drive straight. 
 
+```
+int motor1_speed = 180;
+float constant = 0.95;
+int motor2_speed = int(motor1_speed*constant);
+```
+
+As seen below, the car can stay on a line while driving forward for 2m/6ft.
+
+_insert video of line driving_
 
 ### Task 3: Open Loop Control
-Demonstrate open loop, untethered control of your robot - add in some turns.
+Next, to demonstrate open loop control, I had the robot drive in the following pattern: forward, turn left, forward, turn right, stop, backward, turn right, backward, turn left, stop. For each of the above movements, I wrote a simple function to carry out the task:
+
+```
+void forward(){
+  analogWrite(motor1f, motor1_speed);
+  analogWrite(motor2f, motor2_speed);
+  delay(5);
+}
+
+void backward(){
+  analogWrite(motor1b, motor1_speed);
+  analogWrite(motor2b, motor2_speed);
+  delay(5);
+}
+
+void left(){
+  analogWrite(motor1f, 0);
+  analogWrite(motor2f, motor2_speed);
+  delay(5);
+}
+
+void right(){
+  analogWrite(motor1f, motor1_speed);
+  analogWrite(motor2f, 0);
+  delay(5);
+}
+
+void stops(){
+  analogWrite(motor1f, 0);
+  analogWrite(motor2f, 0);
+  delay(5);
+}
+```
+
+The video below shows the car moving in the pattern described above:
+
+_insert video of open loop control_
 
 ### Additional Task 1
 Consider what frequency analogWrite generates. Is this adequately fast for these motors? Can you think of any benefits to manually configuring the timers to generate a faster PWM signal?
