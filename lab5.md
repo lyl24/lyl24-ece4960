@@ -15,13 +15,11 @@ I decided to use pins A2 and A3 to control one motor and A15 and A16 to control 
 Next, I considered the overall setup of the Artemis, batteries, sensors, wires, and motor drivers. I wanted the Artemis to go in the spot where the previous PCB board was located, and theoretically the motor drivers and 650 mAh battery could fit here too. The ToF sensors would be mounted to the front and side of the car, ideally in flat spots so that it would be easier to tape/adhere the sensors to the car. The IMU should go as far away from the motors as possible to reduce the effects of EMI, and the wires should also be twisted around each other. As for wires, I planned to use the standard red/black wires for power and ground (as well as the motors, which already have red/black wires connected to them), and for the input pins, I wanted to choose colors that have not been used already. I really like the soft stranded-core wires because they are flexible and easy for me to handle, and I wanted to use these as much as possible. 
 
 ### Lab Procedure
-_What are reasonable settings for the power supply?_ 
+While I was in lab, I focused on the soldering component of this week's task, and I did the oscilloscope and power supply tests later on. First, I wanted to figure out where each part should go on the car chassis.
 
 After taking out the control PCB that came with the car, there was much more space on that side of the car. I decided that this would be a good spot for the Artemis and motor drivers, while both of the batteries can fit nicely in the original battery compartment. One of the ToF sensors can be mounted to one side of the car in between the front and back wheels, and the other can be mounted to the side of the battery compartment so that it is perpendicular to the first. I chose these locations because they are relatively flat, making it easier to mount the ToF sensors. This setup also lets the car detect the distance in two directions (front and side). The IMU could also be mounted on the bottom of the battery compartment, and this should be as far from the motors as possible to reduce the effects of EMI. 
 
-To test the motor drivers, I first hooked up and tested one motor driver. In Lab 3, I had issues with soldering strong connections between wires and the TOF/IMU sensors, so I tried using header pins on the first motor driver. I took a row of 4 male header pins and soldered this to the GND, VIN, B1OUT, and B2OUT pins on the first motor driver. I connected female header pins to all wires that needed to be connected to these pins. I used tiny jumper wires to connect BIN1/AIN1 and BOUT1/AOUT1, and I pooled a lot of solder around BIN2/AIN2 and BOUT2/AOUT2 to connect these. Then, I used an oscilloscope to visualize the power on the output for the motors.
-
-_insert something_
+To test the motor drivers, I first hooked up and tested one motor driver. In Lab 3, I had issues with soldering strong connections between wires and the TOF/IMU sensors, so I tried using header pins on the first motor driver. I took a row of 4 male header pins and soldered this to the GND, VIN, B1OUT, and B2OUT pins on the first motor driver. I connected female header pins to all wires that needed to be connected to these pins. I used tiny jumper wires to connect BIN1/AIN1 and BOUT1/AOUT1, and I pooled a lot of solder around BIN2/AIN2 and BOUT2/AOUT2 to connect these. 
 
 To test if the motor driver was properly hooked up with the motor, I ran the following code to see if the wheels would move:
 
@@ -48,7 +46,7 @@ void loop() {
 
 With this code, I found that the motor worked as expected, and the wheels connected to the motor driver would spin in one direction for 1 second, then spin in the other direction for 1 second and keep looping forever. 
 
-_insert video of the robot on its side_
+<iframe width="560" height="315" src="https://www.youtube.com/embed/Jj5P6zTzhWM" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 In the video above, you can see that the motor can be run in both directions. While the connection is very strong using header pins, I found that this method takes up much more space. 
 
@@ -87,23 +85,34 @@ void loop() {
 }
 ```
 
-_insert video of robot wheels in both directions_
+<iframe width="560" height="315" src="https://www.youtube.com/embed/VGdzkjA9Cps" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 As seen in the video above, both sets of wheels can move in either direction. The connections were just as strong as the other motor driver with header pins, and this method also saved a lot of space. The finished circuit with the motor drivers can be seen in the image below.
 
 ![Finished Solder](images/lab5/solder finish.jpg)
 
-Next, I arranged the components inside the car as described above. I attempted to organize wires by twisted them around each other and using twist ties, and the sensors and motor drivers are _taped?_ down to flat surfaces inside the car. I made sure everything could fit inside the car when the blue cover was put back into place, and I determined that I needed to cut out a couple holes in the cover to allow access to the ToF sensors and Artemis board. I used _insert tool_ to cut out holes, then screwed the cover back into place.
+Then, I came in to the lab during office hours to do tests with an oscilloscope and power supply, and I worked on these parts with Syd Lawrence. We hooked up one motor driver to a power supply, then experimented with different voltage supplies. We found that around 0.2-0.25 V, the wheels were no longer getting enough power to move, and when the voltage is turned back up, the wheels can spin quite fast. This can be seen in the video below.
 
-To test that everything was stable, I uploaded a simple driving script to the car and let it drive on its own.
+<iframe width="560" height="315" src="https://www.youtube.com/embed/XmgMZ5YOdYw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
-_insert video_
+We then hooked up a motor driver to an oscilloscope, and we uploaded a simple script to the Artemis. In the script, we used ```analogWrite``` and set the speed to a value of 150. As seen in the output on the oscilloscope display below, we can use PWM to control the duty cycle and therefore control the speed of the wheels.
+
+![Oscilloscope](images/lab5/oscilloscope 2.jpg)
+
+Next, I arranged the components inside the car as described earlier. I attempted to organize wires by twisted them around each other and using twist ties, and the sensors and motor drivers are taped down to flat surfaces inside the car using double-sided tape. I made sure everything could fit inside the car when the blue cover was put back into place, and I determined that I needed to cut out a couple holes in the cover to allow access to the ToF sensors and Artemis board. I used the wire cutter to cut out holes, taped down loose wires using VWR tape, then screwed the cover back into place.
+
+![Assembly](images/lab5/assembly.jpg)
 
 ### Task 1: Lower limit for which each motor still turns while on the ground
-note it may require slightly more power to start from rest compared to when it is running.
+For this task, I inputted different values to the car using ```analogWrite``` to see the lower limit for which the motors can still turn while on the ground. At this point, every component/sensor was completely packaged into the car, the Artemis board was powered by the 650 mAh battery, and the motors were powered by the 850 mAh battery. I ran tests for the following values: 80, 100, 120, 140, 160, 180, and 200. I found that the car could successfully start moving with a value of 180 (but with a lot of struggling), and setting the value to 200 allowed it to move at a reasonable speed. In the first video below, you can see the car struggling to move with a value of 160, and in the second video, it can spin in circles with a value of 200.
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/tfGJhP1mSdU" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/ymmHUeO0Riw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 ### Task 2: Calibration and driving in a straight line
-If your motors do not spin at the same rate, you will need to implement a calibration factor. To demonstrate that your robot can move in a fairly straight line, record a video of your robot following a straight line (e.g. a piece of tape) for at least 2m/6ft. The robot should start centered on the tape, and still partially overlap with the tape at the end.
+When driving the car in a straight line, it tended to go to the left, so I needed to implement a calibration factor. To do this, I defined a value for motor speed and a calibration variable. In the code, I multiplied the motor speed for one of the wheels by the calibration variable, which I tweaked using trial and error in order to get the car to drive straight. As seen below, the car can stay on a line while driving forward for 2m/6ft.
+
 
 ### Task 3: Open Loop Control
 Demonstrate open loop, untethered control of your robot - add in some turns.
