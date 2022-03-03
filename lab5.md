@@ -95,7 +95,7 @@ Then, I came in to the lab during office hours to do tests with an oscilloscope 
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/XmgMZ5YOdYw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
-We then hooked up a motor driver to an oscilloscope, and we uploaded a simple script to the Artemis. In the script, we used ```analogWrite``` and set the speed to a value of 150. As seen in the output on the oscilloscope display below, we can use PWM to control the duty cycle and therefore control the speed of the wheels.
+We then hooked up a motor driver to an oscilloscope, and we uploaded a simple script to the Artemis. In the script, we used ```analogWrite``` and set the speed to a value of 150. As seen in the output on the oscilloscope display below, we can write an analog value to the board as a digital PWM signal, and we can control the duty cycle and thus the speed of the wheels.
 
 ![Oscilloscope](images/lab5/oscilloscope 2.jpg)
 
@@ -164,6 +164,10 @@ _insert video of open loop control_
 
 ### Additional Task 1
 Consider what frequency analogWrite generates. Is this adequately fast for these motors? Can you think of any benefits to manually configuring the timers to generate a faster PWM signal?
+
+```analogWrite``` generates a PWM signal that has a frequency of 500 Hz by default. 
+
+https://docs.particle.io/cards/firmware/input-output/analogwrite-pwm/#:~:text=Writes%20an%20analog%20value%20to,PWM%20signal%20is%20500%20Hz.
 
 ### Additional Task 2
 Write a program that ramps up and down in speed slowly. Reporting the values to your computer using Bluetooth either during operation or when your ramp up/down procedure is over. Use this setup to document accurately what range of speeds you can achieve. (If your sensors are still attached, it may be easiest to use them to help you determine speed).
