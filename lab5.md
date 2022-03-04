@@ -160,7 +160,7 @@ void stops(){
 
 The video below shows the car moving in the pattern described above:
 
-_insert video of open loop control_
+<iframe width="560" height="315" src="https://www.youtube.com/embed/H6EJdq90kk0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 ### Additional Task 1
 Consider what frequency analogWrite generates. Is this adequately fast for these motors? Can you think of any benefits to manually configuring the timers to generate a faster PWM signal?
