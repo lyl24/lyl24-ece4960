@@ -115,13 +115,13 @@ When driving the car in a straight line, it tended to go to the left, so I neede
 
 ```
 int motor1_speed = 180;
-float constant = 0.95;
+float constant = 0.84;
 int motor2_speed = int(motor1_speed*constant);
 ```
 
 As seen below, the car can stay on a line while driving forward for 2m/6ft.
 
-_insert video of line driving_
+<iframe width="560" height="315" src="https://www.youtube.com/embed/Z8BWFwIS93A" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 ### Task 3: Open Loop Control
 Next, to demonstrate open loop control, I had the robot drive in the following pattern: forward, turn left, forward, turn right, stop, backward, turn right, backward, turn left, stop. For each of the above movements, I wrote a simple function to carry out the task:
