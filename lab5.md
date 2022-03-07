@@ -99,7 +99,7 @@ We then hooked up a motor driver to an oscilloscope, and we uploaded a simple sc
 
 ![Oscilloscope](images/lab5/oscilloscope 2.jpg)
 
-Next, I arranged the components inside the car as described earlier. I attempted to organize wires by twisted them around each other and using twist ties, and the sensors and motor drivers are taped down to flat surfaces inside the car using double-sided tape. I made sure everything could fit inside the car when the blue cover was put back into place, and I determined that I needed to cut out a couple holes in the cover to allow access to the ToF sensors and Artemis board. I used the wire cutter to cut out holes, taped down loose wires using VWR tape, then screwed the cover back into place.
+Next, I arranged the components inside the car as described earlier. I attempted to organize wires by twisting them around each other and using twist ties, and the sensors and motor drivers are taped down to flat surfaces inside the car using double-sided tape. I made sure everything could fit inside the car when the blue cover was put back into place, and I determined that I needed to cut out a couple holes in the cover to allow access to the ToF sensors and Artemis board. I used the wire cutter to cut out holes, taped down loose wires using VWR tape, then screwed the cover back into place.
 
 ![Assembly](images/lab5/assembly.jpg)
 
@@ -124,7 +124,7 @@ As seen below, the car can stay on a line while driving forward for 2m/6ft.
 <iframe width="560" height="315" src="https://www.youtube.com/embed/Z8BWFwIS93A" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 ### Task 3: Open Loop Control
-Next, to demonstrate open loop control, I had the robot drive in the following pattern: forward, turn left, forward, turn right, stop, backward, turn right, backward, turn left, stop. For each of the above movements, I wrote a simple function to carry out the task:
+Next, to demonstrate open loop control, I had the car drive in the following pattern: forward, turn left, forward, turn right, stop, backward, turn right, backward, turn left, stop. For each of the above movements, I wrote a simple function to carry out the task:
 
 ```
 void forward(){
@@ -166,7 +166,7 @@ The video below shows the car moving in the pattern described above:
 ```analogWrite``` generates a PWM signal that has a frequency of 500 Hz by default, and the motor driver can operate at a frequency of 50 kHz. This is a bit slow for these motors, and configuring the timers manually to generate a faster PWM signal could potentially increase the reaction rate and speed of the motors.
 
 Sources:
-[Motor Driver Datasheet](https://www.ti.com/lit/ds/symlink/drv8833.pdf?HQS=dis-dk-null-digikeymode-dsf-pf-null-wwe&ts=1646507944819&ref_url=https%253A%252F%252Fcei-lab.github.io%252F)
+[Motor Driver Datasheet](https://www.ti.com/lit/ds/symlink/drv8833.pdf?HQS=dis-dk-null-digikeymode-dsf-pf-null-wwe&ts=1646507944819&ref_url=https%253A%252F%252Fcei-lab.github.io%252F), 
 [Analogwrite/PWM](https://docs.particle.io/cards/firmware/input-output/analogwrite-pwm/#:~:text=Writes%20an%20analog%20value%20to,PWM%20signal%20is%20500%20Hz.)
 
 ### Additional Task 2
