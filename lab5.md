@@ -170,7 +170,87 @@ Sources:
 [Analogwrite/PWM](https://docs.particle.io/cards/firmware/input-output/analogwrite-pwm/#:~:text=Writes%20an%20analog%20value%20to,PWM%20signal%20is%20500%20Hz.)
 
 ### Additional Task 2
-Write a program that ramps up and down in speed slowly. Reporting the values to your computer using Bluetooth either during operation or when your ramp up/down procedure is over. Use this setup to document accurately what range of speeds you can achieve. (If your sensors are still attached, it may be easiest to use them to help you determine speed).
+For this task, I needed to write a program that ramps up and down in speed slowly, then report the values for velocity to my computer using Bluetooth. I combined the IMU code with the Bluetooth Arduino code, and the following code was able to output the velocity to a Jupyter notebook:
 
+```
+previousMillis = currentMillis;
+myICM.getAGMT();
+currentMillis = millis();
 
+//tx_characteristic_float.writeValue(currentMillis);
+
+dt = (currentMillis - previousMillis)*0.001;
+
+//tx_characteristic_float.writeValue(dt);
+tx_estring_value.clear();
+tx_estring_value.append(currentMillis*0.001);
+tx_characteristic_string.writeValue(tx_estring_value.c_str());
+
+acceleration = printScaledAGMT(&myICM);
+delay(1);
+
+currentvelocity = previousvelocity + acceleration*dt;
+tx_characteristic_float.writeValue(currentvelocity);
+```
+
+Next, I wrote the following code for a notification handler in the Jupyter notebook to store the velocity and time outputs into lists:
+
+```
+get_float = 0
+get_string = ""
+times = []
+velocities = []
+
+def handle_notify(uuid, byte_array):
+    extracted_float = ble.bytearray_to_float(byte_array)
+    global get_float 
+    get_float = extracted_float
+    velocities.append(get_float)
+    
+def handle_notifystr(uuid, byte_array):
+    extracted_string = ble.bytearray_to_string(byte_array)
+    global get_string
+    get_string = float(extracted_string)
+    times.append(get_string)
+    
+ble.start_notify(ble.uuid['RX_FLOAT'], handle_notify)
+ble.start_notify(ble.uuid['RX_STRING'], handle_notifystr)
+```
+
+To get the motors to ramp up and down, I added the following code to the main loop in the Arduino code:
+
+```
+while (central.connected()) {
+  if (isup == 0){
+    if (motorspeed >=0 && motorspeed < 255){
+      motorspeed++;
+      Serial.println(motorspeed);
+      analogWrite(motor1f, motorspeed);
+      analogWrite(motor2f, motorspeed*constant);
+      delay(5);
+    }
+  }
+  else if (isup ==1) {
+    if (motorspeed <= 255 && motorspeed > 0){
+      motorspeed--;
+      Serial.println(motorspeed);
+      analogWrite(motor1f, motorspeed);
+      analogWrite(motor2f, motorspeed*constant);
+      delay(5);
+    }
+  }
+  if (motorspeed == 255){
+    isup = 1;
+  }
+  else if (motorspeed == 0){
+    isup = 0;
+  }
+  write_data();
+  read_data();
+}
+```
+
+All of the code above works as intended, however, I did not have enough space at home to allow the car to roam on its own. In addition, the ramp up/down code works perfectly when uploaded alone to the car, but when adding to the combined code with the IMU and Bluetooth code, the car can no longer provide enough power to the wheels in order to get them to move while on the ground. 
+
+### [Click here to return to homepage](https://lyl24.github.io/lyl24-ece4960)
 
