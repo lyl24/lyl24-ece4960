@@ -40,8 +40,34 @@ float get_tof_2(){
 }
 ```
 
+The following code can be used to store the readings into arrays.
 
-            
+```
+get_current_time = millis();
+  time_array[counter] = get_current_time;
+  tof_distance = get_tof_2();
+  tof_array[counter] = tof_distance;
+
+  counter++;
+```
+
+To send the arrays to my computer over Bluetooth, I wrote each value in the array to float characteristics, and they are stored in a growing array in the Python code.
+
+```
+for (int i=0; i<sizeof(tof_array); i++){
+      tof_2_float.writeValue(tof_array[i]);
+      tx_characteristic_float.writeValue(time_array[i]);
+    }
+```
+
+However, the code is unable to upload to the Artemis board, and a blue light on the board flashes when I try. I was unable to figure out how to fix this issue, so I ended up using a method in which the board continuously sends data over Bluetooth. This method really slows down the sampling rate because sending data over Bluetooth takes up extra time, but this method is still sufficient when running the robot at a slower speed.
+
+```
+get_current_time = millis();
+  tx_characteristic_float.writeValue(get_current_time);
+  tof_distance = get_tof_2();
+  tof_2_float.writeValue(tof_distance);
+```
 
 
 
