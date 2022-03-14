@@ -60,7 +60,7 @@ for (int i=0; i<sizeof(tof_array); i++){
     }
 ```
 
-However, the code is unable to upload to the Artemis board, and a blue light on the board flashes when I try. I was unable to figure out how to fix this issue, so I ended up using a method in which the board continuously sends data over Bluetooth. This method really slows down the sampling rate because sending data over Bluetooth takes up extra time, but this method is still sufficient when running the robot at a slower speed.
+In the Jupyter notebook, I created a robot control class, and it also has functions for notification handlers and can send start/stop commands to the robot. However, the code is unable to upload to the Artemis board, and a blue light on the board flashes when I try. I was unable to figure out how to fix this issue, so I ended up using a method in which the board continuously sends data over Bluetooth. This method really slows down the sampling rate because sending data over Bluetooth takes up extra time, but this method is still sufficient when running the robot at a slower speed.
 
 ```
 get_current_time = millis();
@@ -69,18 +69,6 @@ get_current_time = millis();
   tof_2_float.writeValue(tof_distance);
 ```
 
-
-
-
-Familiarize yourself with the Arduino code structure before you design your robot control architecture.
-Use the EString class and modify it as required. It has most of the low level data handling code.
-Beware of buffer overflows when dealing with character arrays (C-strings) in the Arduino code! The EString class utilizes a C-string member variable char_array of size 150. The append member functions are not memory safe!
-Refer to the “Global Variables” section of ble_arduino.ino to create new characteristics. You will need to create a corresponding entry in connection.yaml. You are not expected to follow the naming paradigm (“RX_” in ble_arduino.ino has a corresponding “TX_” in connection.yaml) used in the base code.
-Please checkout the Jupyter introduction notebook and/or tutorial (~10 min read)! It will familiarize you with some basic terminology and functionality.
-Always check the FAQ when you get stuck with a problem. For example, it shows you a quick way to generate new UUIDs.
-Your notification function callbacks should perform minimal processing. All you have to do is to store the value and/or time of the event.
-Do not call a “receive_*” function inside the callback handler. It defeats the purpose of the BLE notify functionality.
-Checkout the Tutorials section for primers (python classes, CLI, Jupyter Lab) and other helpful resources.
 
 
 ### [Click here to return to homepage](https://lyl24.github.io/lyl24-ece4960)
