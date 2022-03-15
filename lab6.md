@@ -88,14 +88,21 @@ tof_distance = get_tof_2();
   analogWrite(motor2f, int(motorspeed*constant));
 ```
 
-In lab 5, I found the deadband of the motor to be around an analogWrite value of 200, however, this value fluctuates based on how much charge the battery has. (I may have done deadband experiment while the battery was low, and when using a fresh battery in lab 6, I found that the robot could actually drive when I input much lower values.) To scale the output from the PID compute function, I used the built-in map function, which let me rescale the output (which is on a scale of 0 to 255) to a range of 100 to 160. Unfortunately, after a lot of tweaking, the only thing that the PID function could output was 0.0, and it was unsuccessful. I ended up implementing simple code for P control, and I set the proportional gain to 0.9. To prevent overshooting, the robot would slow down as it got closer to the setpoint.
+In lab 5, I found the deadband of the motor to be around an analogWrite value of 200, however, this value fluctuates based on how much charge the battery has. (I may have done deadband experiment while the battery was low, and when using a fresh battery in lab 6, I found that the robot could actually drive when I input much lower values.) To scale the output from the PID compute function, I used the built-in map function, which let me rescale the output (which is on a scale of 0 to 255) to a range of 100 to 160. Unfortunately, after a lot of tweaking, the only thing that the PID function could output was 0.0, and it was unsuccessful. I ended up implementing simple code for P control, and I set the proportional gain to 0.9. To try to prevent overshooting, the robot would slow down as it got closer to the setpoint.
 
 ```
 
 
 ```
+<iframe width="560" height="315" src="https://www.youtube.com/embed/VbYXMs84bSU" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
-This method slowed down the robot considerably, and Jade suggested that I try adding oscillations so that the robot could go faster, and when it inevitably overshoots, it would be able to find the correct setpoint by going backwards. 
+<iframe width="560" height="315" src="https://www.youtube.com/embed/-yr9hlKL1xk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/0kauGsqwnus" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+From the videos above, the robot worked the most reliably in lab, and it consistently stopped about 300 mm in front of the board. However, when I brought the car home, it started having issues with Bluetooth connection, and sometimes the motors would not work. In the end, I was able to make it stop in front of the wall, but the distance that it stopped at was more variable.
+
+Overall, this method slowed down the robot considerably, and Jade suggested that I try adding oscillations so that the robot could go faster, and when it inevitably overshoots, it would be able to find the correct setpoint by going backwards. 
 
 ```
 tof_distance = get_tof_2();
