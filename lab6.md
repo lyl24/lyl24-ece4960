@@ -69,6 +69,56 @@ tof_distance = get_tof_2();
 tof_2_float.writeValue(tof_distance);
 ```
 
+![Jupyter](images/lab6/lab 6 jupyter.PNG)
 
+After a couple trials, I found that the sensor could record and send the distance readings every 5 milliseconds on average. When I was debugging the debugging code, I had a couple of ```delay``` and ```Serial.println``` functions, and since these slow down the control loop, I commented these out after I confirmed that the code could function. I ended up keeping the "while(central.connected())" line in the main loop, since this could allow me to control the robot better -- as soon as the robot is connected to Bluetooth, I can tell it to start and stop from my code in the Jupyter notebook, and I eliminated the risk of having to chase down the robot when it goes rogue and runs away.
+
+## Lab Procedure:
+I first tried to use the PID library in Arduino, and I used the following code.
+
+```
+tof_distance = get_tof_2();
+  Input = tof_distance;
+  Setpoint = 300;
+  myPID.Compute();
+
+  motorspeed = map(Output, 0, 255, 100, 160);
+  Serial.println(Output);
+  analogWrite(motor1f, motorspeed);
+  analogWrite(motor2f, int(motorspeed*constant));
+```
+
+In lab 5, I found the deadband of the motor to be around an analogWrite value of 200, however, this value fluctuates based on how much charge the battery has. (I may have done deadband experiment while the battery was low, and when using a fresh battery in lab 6, I found that the robot could actually drive when I input much lower values.) To scale the output from the PID compute function, I used the built-in map function, which let me rescale the output (which is on a scale of 0 to 255) to a range of 100 to 160. Unfortunately, after a lot of tweaking, the only thing that the PID function could output was 0.0, and it was unsuccessful. I ended up implementing simple code for P control, and I set the proportional gain to 0.9. To prevent overshooting, the robot would slow down as it got closer to the setpoint.
+
+```
+
+
+```
+
+This method slowed down the robot considerably, and Jade suggested that I try adding oscillations so that the robot could go faster, and when it inevitably overshoots, it would be able to find the correct setpoint by going backwards. 
+
+```
+tof_distance = get_tof_2();
+float error = tof_distance - setpoint;
+float proportional_term = error*kp;
+
+if(proportional_term > 5){
+    motorspeed = map(proportional_term, 0, 2000, 80, 255);
+    // set forward motor speed
+}
+else if(proportional_term < -5){
+    motorspeed = map(proportional_term, 0, -300, 80, 255);
+    // set backward motor speed
+}
+else{
+    // active braking
+}
+```
+
+With a setpoint at 300 mm, the robot overshot the setpoint by a lot and ended up crashing, but it was able to quickly back up and find the correct location again.
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/rdnoQeJK3Ug" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+I found this lab to be especially difficult since I don't have much coding experience outside of basic robotics and bioinformatics, so I wasn't able to work on including an integrator or derivative. However, adding the integrator term should be quite easy, and it would help address offsets due to past errors. To implement this, you can multiply the error at a time step by the length of the time step, then add this to the integrator term. This term is then multiplied by the integral gain and added to the proportional term to get the overall controller output. 
 
 ### [Click here to return to homepage](https://lyl24.github.io/lyl24-ece4960)
