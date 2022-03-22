@@ -36,12 +36,18 @@ read_data();
   counter++;
 ```
 
-From the data I collected, I was able to make graphs for the TOF sensor output (distance vs time), the computed speed (velocity vs time), and the motor input.
+From the data I collected, I was able to make graphs for the TOF sensor output (distance vs time), the computed speed (velocity vs time), and the motor input. *NOTE: For all the graphs below, the times are all in seconds and not milliseconds. I just forgot to change the axis labels.
 
-TOF sensor output:
+TOF sensor output (distance vs time):
+![TOF vs time](images/lab7/tof vs time.PNG)
 
+Computed speed (velocity vs time):
+![Velocity vs time](images/lab7/velocity vs time.PNG)
 
+Motor input values:
+![PWM vs time](images/lab7/pwm vs time.PNG)
 
+I measured the steady state speed to be around (insert value) using the slope of 
 
 Measure both the steady state speed and the 90% rise time and compute the A and B matrix.
 
