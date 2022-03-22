@@ -47,7 +47,7 @@ Computed speed (velocity vs time):
 Motor input values:
 ![PWM vs time](images/lab7/pwm vs time.PNG)
 
-I measured the steady state speed to be around 2250 mm/s using the slope of the TOF sensor output between 18-19 seconds where it is relatively linear. I estimated the rise time to be about 1.5 seconds using the velocity graph. Using these two values, I was able to find the values for d and m, which I then plugged into Python code to compute the A and B matrices (see below).
+I measured the steady state speed to be around 2250 mm/s using the slope of the TOF sensor output between 18-19 seconds where it is relatively linear. I estimated the 90% rise time to be about 1.5 seconds using the velocity graph. Using these two values, I was able to find the values for d and m: d is found by dividing the step size (approximated as 1 and rescaled later) by the steady state velocity, while m is found by multiplying d by the 90% rise time and dividing by -ln(0.1). I plugged these values into my Python code to compute the A and B matrices (see below).
 
 ## Part 2: Kalman Filter Setup
 To setup the Kalman filter, I first needed to make the covariance matrices for process noise and sensor noise. I used the following equations from lecture to do this:
