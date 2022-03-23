@@ -115,5 +115,55 @@ I plotted the resulting graph on top of the original sensor readings graph.
 As seen in the graph, the original readings (red) and the outputs from the Kalman filter (blue) are quite close and difficult to distinguish. When I adjusted the sigma values to be significantly lower, the blue line deviated from the red line, so I determined that the sigma values that I initially chose were sufficient.
 
 ## Part 4: Implement the Kalman Filter on the Robot
+To implement the Kalman filter on the robot, I first translated the Python code into Arduino.
+
+```
+//Kalman filter
+include <BasicLinearAlgebra.h>  //Use this library to work with matrices:
+using namespace BLA;
+int sigma_1 = 35;
+int sigma_2 = 71;
+int sigma_3 = 5;
+int sigma_4 = 4.5;
+float d = 0.000444;
+float m = 0.00029;
+int Delta_T = 8;
+
+Matrix<2,1> mu = {0,0};
+Matrix<1> u = 0.0;
+
+Matrix<2,2> sig_u = {sq(sigma_1), 0,
+                     0, sq(sigma_2)};
+Matrix<1> sig_z = {sq(sigma_4)};
+Matrix<2,2> sig = {sq(sigma_3), 0,
+                   0, sq(sigma_3};
+
+Matrix<2,2> A = {0,1,
+                 0,-1*d/m};
+Matrix<2,1> B = {0,1/m};
+Matrix<1,2> C = {-1,0};
+
+Matrix<2,2> Ad = {1, 8,
+                  0, -11.24827586};
+Matrix<2,1> Bd = {0,
+                  27586.20689655};
+
+void kf(mu, Matrix<2,2> sigma, Matrix<1> tof_reading){
+  Matrix<2,2> identity = {1,0,
+                          0,1};
+  Matrix<2,1> mu_p = Ad*mu + Bd*u;
+  Matrix<2,2> sigma_p = Ad*sigma*~Ad + sig_u;
+  
+  Matrix<1> y_m= tof_reading - C*mu_p;
+  Matrix<1> sigma_m = C*sigma_p*~C + sigma_z;
+  Invert(sigma_m);
+  Matrix<2,1> kkf_gain = sigma_p*~C*sigma_m;
+  
+  mu = mu_p + kkf_gain*y_m;
+  sigma = identity - kkf_gain*C*sigma_p;
+}
+```
+
+In order to get accurate and fast readings, the Kalman filter should still run in between TOF readings, and it will use the most recent data available from the sensor as soon as it becomes available. Unfortunately I ran out of time to do this lab, so I wasn't able to test out the code on my robot.
 
 ### [Click here to return to homepage](https://lyl24.github.io/lyl24-ece4960)
