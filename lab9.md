@@ -41,7 +41,7 @@ while(central.connected()){
 
 To collect angle readings, I created a separate function to convert angular speed readings to angle. To find the current angle, I also had to add in a slight calibration factor of 0.005 to account for drift.
 
-```
+```ccp
 float get_gyroscope(ICM_20948_I2C *sensor) {
   dt = (current_time - previous_time)*0.001;
   current_gyrX = previous_gyrX - (sensor->gyrX())*dt + 0.005;
@@ -148,7 +148,7 @@ I used for loops to run all of my data through the transformation function, whic
 
 The points on the plot are all around where I expected them to be, however there is not a super clear outline of the room. I tried to rescale my data to see if it would help - the robot kept physically turning from 0 to 440 degrees, however it would mark down the angles in a range of -10 to 350 instead. I used the following function in Python to rescale the angle values:
 
-```
+```python
 def rescaler(x, x_min, x_max):
     x_norm = (x-x_min)/(x_max-x_min)
     x_norm = x_norm*440
@@ -166,7 +166,7 @@ Next, I estimated where the actual walls and obstacles were based on the scatter
 
 While the data from Attempt #1 was pretty bad, some of the major features of the room are still recognizable such as the overall shape and also the presence of some obstacles in the middle. I saved lists containing the end points of these lines, which can be used in the simulator for the next lab. (*Note: The code below shows two lists each for the x and y values, and this was so that I could show the cardboard box in the middle of the room as a separate set of lines.)
 
-```
+```python
 x_values = [500, 600, -50, -200, -1700, -1500, -500, -300, 2250, 2000, 500]
 y_values = [-1400, -700, -600, -1300, -1200, 100, 0, 1600, 1450, -1500, -1400]
 plt.plot(x_values, y_values)
@@ -179,6 +179,6 @@ plt.show()
 ## Bonus Content
 To help figure out the math for the transformation matrices, my roommate's cat (Tostito "Toast" Sriram) sat on my paper.
 
-![Cat](images/lab9/cat.PNG)
+![Cat](images/lab9/cat.jpg)
 
 ### [Click here to return to homepage](https://lyl24.github.io/lyl24-ece4960)
