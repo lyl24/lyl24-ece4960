@@ -39,6 +39,17 @@ while(central.connected()){
       }
 ```
 
+To collect angle readings, I created a separate function to convert angular speed readings to angle. To find the current angle, I also had to add in a slight calibration factor of 0.005 to account for drift.
+
+```
+float get_gyroscope(ICM_20948_I2C *sensor) {
+  dt = (current_time - previous_time)*0.001;
+  current_gyrX = previous_gyrX - (sensor->gyrX())*dt + 0.005;
+  previous_gyrX = current_gyrX;
+  return current_gyrX;
+}
+```
+
 There was a recurring erorr where the gyroscope would not start at 0 degrees, and it typically would have a number around -10 degrees as the initial angle. I attempted to fix this issue by calibrating for the error: ```output_gyr = current_gyrX - offset_gyr```, where the ```offset_gyr``` variable calibrates all values so that the starting angle is equal to 0. This method did not make the results significantly better, so I eventually got rid of this line.
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/5Am0pRBLigA" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
