@@ -1,4 +1,4 @@
-# Lab 9
+# Lab 9: Mapping
 
 ## Objective:
 For this lab, the goal is to build a map of a static room (the front room of the lab). To do this, the first step is to code the robot to turn around in a circle slowly while gathering data from the IMU and TOF sensors, then use transformation matrices to plot the data into a map of the room. This map will be used in future labs on localization and navigation.
