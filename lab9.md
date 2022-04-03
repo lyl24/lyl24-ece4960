@@ -176,4 +176,9 @@ plt.plot(x_values2, y_values2)
 plt.show()
 ```
 
+## Bonus Content
+To help figure out the math for the transformation matrices, my roommate's cat (Tostito "Toast" Sriram) sat on my paper.
+
+![Cat](images/lab9/cat.PNG)
+
 ### [Click here to return to homepage](https://lyl24.github.io/lyl24-ece4960)
