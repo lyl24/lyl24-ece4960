@@ -150,7 +150,9 @@ It was extremely difficult to calibrate the motors so that the turns were the sa
 <iframe width="560" height="315" src="https://www.youtube.com/embed/IJqRwO_fuyI" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 ## Bloopers
+This lab took many, many, many attempts in order for me to properly pull off the stunts. I've compiled a short video that chronicles the struggles that we (my roomba and I) had to overcome.
 
+<iframe width="560" height="315" src="https://www.youtube.com/embed/T4FqQ9YENx8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 Anyways, thanks for coming to my TED talk.
 
