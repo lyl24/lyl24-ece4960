@@ -89,8 +89,69 @@ After many failed runs (some of which were very close to succeeding), I captured
 <iframe width="560" height="315" src="https://www.youtube.com/embed/S9WTDIpaqSE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 ## Open Loop, Repeatable Stunts
+For the extra stunt, I wanted the robot to be able to avoid and go around obstacles in its environment. While this isn't technically a flashy stunt, I wanted the robot to be able to behave like a Roomba, so I've called this move "The Roomba." To program "The Roomba," the robot first drives forward while continuously gathering distance readings in front of it using a front-mounted TOF sensor. As soon as it detects an obstacle in front of it, it first rotates to the right and collects a new distance reading, then rotates to the left and collects another distance readings. Comparing the two distance readings, it will choose to go in the direction with a higher value, allowing it to travel for longer before hitting another obstacle. 
+
+```ccp
+while(central.connected()){
+  read_data();
+  tof_distance = get_tof_2();
+  if(tof_distance > 300){
+    motorspeed = 75;
+    forward();
+  }
+  else if(tof_distance <= 300 && tof_distance > 20){
+    brake();
+    delay(5);
+    motorspeed = 180;
+    turn_right();
+    delay(500);
+    brake();
+    delay(5);
+    float right_distance = get_tof_2();
+    delay(5);
+    turn_left();
+    delay(1000);
+    brake();
+    delay(5);
+    float left_distance = get_tof_2();
+    delay(5);
+    turn_right();
+    delay(500);
+    brake();
+    delay(5);
+
+    if(right_distance > left_distance){
+      turn_right();
+      delay(500);
+      brake();
+    }
+    else{
+      turn_left();
+      delay(500);
+      brake();
+    }
+  }
+  else{
+    motorspeed = 100;
+    backward();
+    delay(200);
+    brake();
+    delay(5);
+  }
+}
+}
+else{
+brake();
+}
+```
+
+It was extremely difficult to calibrate the motors so that the turns were the same on both sides of the robot -- within the same run, the robot would sometimes massively overshoot a turn and then get stuck on the next turn, and this problem was exacerbated by a dying battery. In the end, I was able to get a couple of runs that worked decently well, and the robot was able to sense and avoid objects in front of it.
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/IJqRwO_fuyI" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+## Bloopers
 
 
-![Battery hookup](images/lab4/battery hookup.jpg)
+Anyways, thanks for coming to my TED talk.
 
 ### [Click here to return to homepage](https://lyl24.github.io/lyl24-ece4960)
