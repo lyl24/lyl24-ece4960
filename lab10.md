@@ -12,7 +12,7 @@ In the trajectory plotter, the odometry and ground truth readings are plotted in
 
 ![Plotter](images/lab10/trajectory plotter.PNG)
 
-In the provided simulator code, we can either manually move the robot using arrow keys or program it to move in a certain way by setting the linear velocity (m/s) and angular velocity (rad/s). The robot can get sensor readings, get the odometry and ground truth poses, and plot the data in the trajector plotter.
+In the provided simulator code, we can either manually move the robot using arrow keys or program it to move in a certain way by setting the linear velocity (m/s) and angular velocity (rad/s). The robot can get sensor readings, get the odometry and ground truth poses, and plot the data in the trajectory plotter.
 
 ## 2. Open Loop Control
 Next, we want to make the robot go in a square around the map while plotting the ground truth and odometry of the robot. I used the following code to make it go in a full square:
@@ -52,7 +52,7 @@ Over time, because the turns are not 100% accurate, the robot's squares start to
 <iframe width="560" height="315" src="https://www.youtube.com/embed/M2Sl2KfQVVI" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 ## 3. Closed Loop Control
-Lastly, we want to design a simple program that would allow the robot to perform obstacle avoidance. My idea was to have the robot continuously collect sensor readings, and it would drive forward whenever it detects no obstacle in front of it, and then stop/turn when there is an obstacle. To test this, I first coded the robot to go forward and backward, stopping right in front of a wall.
+Lastly, we want to design a simple program that would allow the robot to perform obstacle avoidance. My idea was to have the robot continuously collect sensor readings, have it drive forward whenever it detects no obstacle in front of it, and then stop/turn when there is an obstacle. To test this, I first coded the robot to go forward and backward, stopping right in front of a wall.
 
 ```python
 cmdr.reset_plotter()
@@ -88,10 +88,10 @@ time.sleep(1)
 while cmdr.sim_is_running() and cmdr.plotter_is_running():
     sensor_values = cmdr.get_sensor()
     
-    if sensor_values >= 0.3:
-        cmdr.set_vel(2, 0)
+    if sensor_values >= 0.25:
+        cmdr.set_vel(1, 0)
         plot_pose()
-    elif sensor_values < 0.3:
+    elif sensor_values < 0.25:
         cmdr.set_vel(0, 2*math.radians(90))
         await asyncio.sleep(random.uniform(0.1, 1))
         cmdr.set_vel(0, 0)
@@ -104,9 +104,9 @@ Next, I doubled the linear velocity of the robot to see if it could handle going
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/Exnim4-txyU" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
-The distance at which the robot stops in front of a wall varies a lot, and in the runs that I did, the robot would always stop in between 0 m and the threshold that I set (either 0.25 or 0.3 m). The robot can get extremely close to an obstacle without colliding (within 0.05 m), though sometimes it can't stop in time and softly bumps into the wall. There are some other glitches that prevent the obstacle avoidance code from working all of the time. For example, if the robot is in a corner or very close to the wall, it will need to bump into the wall in order to turn since it is a bit bulky. In addition, there are other instances where the robot thinks the way ahead is clear, but then it accidentally clips its side on a corner and then goes slightly off course. One way to prevent collision issues is to increase the distance threshold so that the robot stays further from the wall. It would be very difficult to avoid the issue of clipping corners, but one possible way to address this issue is to put more distance sensors on the robot, especially on its edges/corners.
+The distance at which the robot stops in front of a wall varied a lot, and in the runs that I did, the robot would always stop in between 0 m and the threshold that I set (either 0.25 or 0.3 m). The robot can get extremely close to an obstacle without colliding (within 0.05 m), though sometimes it can't stop in time and softly bumps into the wall. There are some other glitches that prevent the obstacle avoidance code from working all of the time. For example, if the robot is in a corner or very close to the wall, it will need to bump into the wall in order to turn since it is a bit bulky. In addition, there are other instances where the robot thinks the way ahead is clear, but then it accidentally clips its side on a corner and then goes slightly off course. One way to prevent collision issues is to increase the distance threshold so that the robot stays further from the wall. It would be very difficult to avoid the issue of clipping corners, but one possible way to address this issue is to put more distance sensors on the robot, especially on its edges/corners.
 
-Before wrapping up, I decided to have some fun with the simulator. As a biological engineer, I wanted to see if I could make the robot implement some pseduo-bacterial chemotaxis behaviors. In bacterial chemotaxis, a bacterium does a sort of random walk in order to go towards/away from certain stimulants in its environment. The random walk consists of long "runs" where the bacterium takes a nice long walk in a semi-straight path, as well as short "tumbles" where the bacterium flails its flagella in order to change direction in a random, chaotic manner. In the simulation code, I set the angular velocity to an obscenely high value in order to simulate a "tumble," and I kept the randomly generated time that the robot spins for. The result is as follows:
+Before wrapping up, I decided to have some fun with the simulator. As a biological engineer, I wanted to see if I could make the robot implement some pseudo-bacterial chemotaxis behaviors. In bacterial chemotaxis, a bacterium does a sort of random walk in order to go towards/away from certain stimulants in its environment. The random walk consists of long "runs" where the bacterium takes a nice long walk in a semi-straight path, as well as short "tumbles" where the bacterium flails its flagella in order to change direction in a random, chaotic manner. In the simulation code, I set the angular velocity to an obscenely high value in order to simulate a "tumble," and I kept the randomly generated time for the duration of the spin. The result is as follows:
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/ffwVOsev9rA" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
