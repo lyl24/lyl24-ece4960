@@ -95,9 +95,6 @@ After implementing the code on the robot, the total overshoot did not decrease s
 
 I implemented Attempts #1 and #2 while in lab before Spring Break, and I ended up collecting data using Attempt #1 just to see if the results would still be okay. The robot kept overshooting to about 440 degrees physically but thinking it rotated 360 degrees, so each of the resulting data points progressively got more and more incorrect. I was worried that the map using this bad data would completely be a hairball, however it looked somewhat reasonable when plotted out (see below).
 
-### Attempt #3: A new approach to Stop and Go
-After plotting the data from Attempt #1, I was unhappy with the results, so I wanted to see if I could code up a better stop and go program over Spring Break.
-
 ## Read out distances
 For this part, I set up the robot on all points in the front room of the lab (excluding the origin) and allowed it to run through the code many times. The area that I want the robot to map out is shown below.
 
@@ -155,7 +152,7 @@ def rescaler(x, x_min, x_max):
     return x_norm
 ```
 
-The resulting data was actually quite bad compared to the first plot, though I'm not sure if it's because I made an error somewhere in the code or if rescaling truly was a terrible idea. Either way, I determined that the best thing to do is to try to improve my stop and go code, and I embarked on Attempt #3 (see above).
+The resulting data was actually quite bad compared to the first plot, though I'm not sure if it's because I made an error somewhere in the code or if rescaling truly was a terrible idea.
 
 ![Normalize Map](images/lab9/normalize map.PNG)
 
