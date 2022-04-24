@@ -1,6 +1,6 @@
 # Lab 11: Grid Localization using Bayes Filter
 
-## Objective: For this lab, the goal is to implement grid localization using Bayes Filter! Robot localization allows the robot to determine where it is located with respect to its environment, and in the previous lab, we found that using non-probabilistic methods leads to terrible results.
+## Objective: The goal is to implement grid localization using Bayes Filter! Robot localization allows the robot to determine where it is located with respect to its environment, and in the previous lab, we found that using non-probabilistic methods leads to terrible results.
 
 In this lab, we are using the same simulator program from Lab 10. The result from the Bayes filter will be displayed on the trajectory plotter alongside the odometry readings and ground truth. When implemented well, the Bayes filter trajectory should follow the ground truth trajectory closely. (Explain Bayes more here)
 
@@ -66,5 +66,89 @@ def odom_motion_model(cur_pose, prev_pose, u):
 ```
 
 (Discuss Gaussian)
+
+### prediction_step
+For the prediction step of the Bayes filter, the probabilities stored in bel_bar are updated based on the belief from the previous time step and the odometry motion model.
+
+```python
+def prediction_step(cur_odom, prev_odom):
+    """ 
+    Args:
+        cur_odom  ([Pose]): Current Pose
+        prev_odom ([Pose]): Previous Pose
+    """
+    
+    u = compute_control(cur_odom, prev_odom)
+    for x_prev in range(MAX_CELLS_X):
+        for y_prev in range(MAX_CELLS_Y):
+            for theta_prev in range(MAX_CELLS_A):
+                if loc.bel[(x_prev, y_prev, theta_prev)] < 0.0001:
+                    continue
+                for x_cur in range(MAX_CELLS_X):
+                    for y_cur in range(MAX_CELLS_Y):
+                        for theta_cur in range(MAX_CELLS_A):
+                            loc.bel_bar[(x_cur, y_cur, theta_cur)] += odom_motion_model(loc.mapper.from_map(x_cur, y_cur, theta_cur), loc.mapper.from_map(x_prev, y_prev, theta_prev), u)*loc.bel[(x_prev, y_prev, theta_prev)]
+  
+    loc.bel_bar = loc.bel_bar/np.sum(loc.bel_bar)
+```
+
+In order to run through every cell, I defined the following variables:
+
+```python
+MAX_CELLS_X = loc.mapper.MAX_CELLS_X
+MAX_CELLS_Y = loc.mapper.MAX_CELLS_Y
+MAX_CELLS_A = loc.mapper.MAX_CELLS_A
+```
+
+For all the previous values, if the belief is less than 0.0001, we can assume that the probability is basically zero and therefore ignore it. If the belief is greater than this value, the code then loops through all of current values, and it updates bel_bar using the following equation:
+
+![prediction step](images/lab11/prediction step.PNG)
+
+Finally, since we assumed that all values lower than 0.0001 are simply 0, the probabilities across the grid might not perfectly add up to 1 anymore. In the last line of the prediction step, I included a step that normalizes the probabilities and fixes this issue.
+
+### sensor_model
+In the sensor model, the observations made in the rotation loop and the current pose are inputs, and the output is an array that stores the likelihood of each individual measurement (equivalent to p(z|x) ).
+
+```python
+def sensor_model(obs, cur_pose):
+    """ 
+    Args:
+        obs ([ndarray]): A 1D array consisting of the measurements made in rotation loop
+
+    Returns:
+        [ndarray]: Returns a 1D array of size 18 (=loc.OBS_PER_CELL) with the likelihood of each individual measurements
+    """
+    
+    prob_array = []
+    for i in range(18):
+        prob_value = loc.gaussian(obs[i], cur_pose[i], loc.sensor_sigma)
+        prob_array.append(prob_value)
+    return prob_array
+```
+
+This function uses the Gaussian function to determine the probability that we get a certain distance observation given the current position of the robot.
+
+### update_step
+In the final step, the probabilities stored in bel are updated based on bel_bar and the sensor model.
+
+```python
+def update_step():
+    for x in range(0, MAX_CELLS_X):
+        for y in range(0, MAX_CELLS_Y):
+            for theta in range(0, MAX_CELLS_A):
+                loc.bel[(x, y, theta)] = np.prod(sensor_model(loc.obs_range_data,mapper.get_views(x, y, theta)))*loc.bel_bar[(x, y, theta)] 
+
+    loc.bel = loc.bel/np.sum(loc.bel) 
+```
+
+First, I ran through every cell, and for each cell, the belief is updated according to the following equation:
+
+![update step](images/lab11/update step.PNG)
+
+Next, I normalized the probabilities similar to what I did in the prediction step.
+
+## Run the Bayes Filter
+Next, it's time to run the code and see how the Bayes filter holds up. 
+
 
 ### [Click here to return to homepage](https://lyl24.github.io/lyl24-ece4960)
