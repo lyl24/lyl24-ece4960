@@ -148,7 +148,12 @@ First, I ran through every cell, and for each cell, the belief is updated accord
 Next, I normalized the probabilities similar to what I did in the prediction step.
 
 ## Run the Bayes Filter
-Next, it's time to run the code and see how the Bayes filter holds up. 
+Next, it's time to run the code and see how the Bayes filter holds up. I recorded videos of the trajectory plotter with the ground truth (green line), odometry readings (red line), and Bayes filter values (blue line). In the second video, the squares on the map represent the probability that the robot is in a certain grid location, with white being the most probable location.
 
+<iframe width="560" height="315" src="https://www.youtube.com/embed/beD7GwoiV-Y" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/xo_qTzhsBpI" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+(Discussion)
 
 ### [Click here to return to homepage](https://lyl24.github.io/lyl24-ece4960)
