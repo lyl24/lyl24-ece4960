@@ -1,11 +1,15 @@
 # Lab 11: Grid Localization using Bayes Filter
 
-## Objective: The goal is to implement grid localization using Bayes Filter! Robot localization allows the robot to determine where it is located with respect to its environment, and in the previous lab, we found that using non-probabilistic methods leads to terrible results.
+## Objective: The goal is to implement grid localization using Bayes Filter! Robot localization allows the robot to determine where it is located with respect to its environment, and in the previous lab, we found that using non-probabilistic methods lead to terrible results.
 
-In this lab, we are using the same simulator program from Lab 10. The result from the Bayes filter will be displayed on the trajectory plotter alongside the odometry readings and ground truth. When implemented well, the Bayes filter trajectory should follow the ground truth trajectory closely. (Explain Bayes more here)
+In this lab, we are using the same simulator program from Lab 10. The result from the Bayes filter will be displayed on the trajectory plotter alongside the odometry readings and ground truth. When implemented well, the Bayes filter trajectory should follow the ground truth trajectory closely. 
+
+As opposed to the non-probabilistic methods from Lab 10, a Bayes filter is a probabilistic approach for estimating the location of the robot, and it does so recursively over time using a mathematical/statistical model paired with incoming measurements of the robot's environment. The general method for a Bayes filter is as follows:
+
+![prediction step](images/lab11/full algorithm.PNG)
 
 ## Code
-Before running the code, I first imported the ```numpy``` and ```math``` modules.
+Before running the code below, I first imported the ```numpy``` and ```math``` modules.
 
 The Bayes filter code consists of five functions: ```compute_control```, ```odom_motion_model```, ```prediction_step```, ```sensor_model```, and ```update_step```.
 
@@ -36,10 +40,10 @@ def compute_control(cur_pose, prev_pose):
     return delta_rot_1, delta_trans, delta_rot_2
 ```
 
-The ```arctan2``` function in the numpy library outputs a value in radians in the -pi to pi range. When subtracting angles, I used the ```normalize_angle``` function to convert all angles to a range between -180 and 180 degrees. 
+The ```arctan2``` function in the numpy library outputs a value in radians in the -pi to pi range, and this can be converted to degrees using the ```degrees``` function. When subtracting angles, I used the ```normalize_angle``` function to convert all angles to a range between -180 and 180 degrees. 
 
 ### odom_motion_model
-The odomotry motion model function takes the current pose, previous pose, and control input as its arguments, and it returns the probability that the robot moves to a certain pose given the current pose and control input.
+The odometry motion model function takes the current pose, previous pose, and control input as its arguments, and it returns the probability that the robot moves to a certain pose given the current pose and control input.
 
 ```python
 def odom_motion_model(cur_pose, prev_pose, u):
@@ -65,7 +69,7 @@ def odom_motion_model(cur_pose, prev_pose, u):
     return prob
 ```
 
-(Discuss Gaussian)
+The Gaussian distribution is used to model the measurement noise, and it is like a simplified version of the Beam model. In the code above, the ```gaussian``` function helps determine how “probable” the transition of the robot state from the previous pose to the current pose is given the actual control input ("true" mean) and the rotation/translation noise (standard deviation).
 
 ### prediction_step
 For the prediction step of the Bayes filter, the probabilities stored in bel_bar are updated based on the belief from the previous time step and the odometry motion model.
@@ -100,7 +104,7 @@ MAX_CELLS_Y = loc.mapper.MAX_CELLS_Y
 MAX_CELLS_A = loc.mapper.MAX_CELLS_A
 ```
 
-For all the previous values, if the belief is less than 0.0001, we can assume that the probability is basically zero and therefore ignore it. If the belief is greater than this value, the code then loops through all of current values, and it updates bel_bar using the following equation:
+For all the previous values, if the belief is less than 0.0001, we can assume that the probability is basically zero and therefore ignore it. If the belief is greater than this value, the code then loops through all current values, and it updates bel_bar using the following equation:
 
 ![prediction step](images/lab11/prediction step.PNG)
 
@@ -126,7 +130,7 @@ def sensor_model(obs, cur_pose):
     return prob_array
 ```
 
-This function uses the Gaussian function to determine the probability that we get a certain distance observation given the current position of the robot.
+This function uses the Gaussian function to determine the probability that we get a certain distance observation given the current position of the robot and sensor noise.
 
 ### update_step
 In the final step, the probabilities stored in bel are updated based on bel_bar and the sensor model.
@@ -148,7 +152,7 @@ First, I ran through every cell, and for each cell, the belief is updated accord
 Next, I normalized the probabilities similar to what I did in the prediction step.
 
 ## Run the Bayes Filter
-Next, it's time to run the code and see how the Bayes filter holds up. I recorded videos of the trajectory plotter with the ground truth (green line), odometry readings (red line), and Bayes filter values (blue line). In the second video, the squares on the map represent the probability that the robot is in a certain grid location, with white being the most probable location.
+It's time to run the code and see how the Bayes filter holds up. I recorded videos of the trajectory plotter with the ground truth (green line), odometry readings (red line), and Bayes filter values (blue line). In the second video, the squares on the map represent the probability that the robot is in a certain grid location, with white being the most probable location.
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/beD7GwoiV-Y" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
