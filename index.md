@@ -12,6 +12,7 @@
 ### [Lab 9: Mapping](https://lyl24.github.io/lyl24-ece4960/lab9)
 ### [Lab 10: Simulator](https://lyl24.github.io/lyl24-ece4960/lab10)
 ### [Lab 11: Grid Localization using Bayes Filter](https://lyl24.github.io/lyl24-ece4960/lab11)
+### [Lab 12: Localizaton (real)](https://lyl24.github.io/lyl24-ece4960/lab12)
 
 ### **About Me**
 ##### Hi, my name is Linda, and I'm an MEng student studying Biological Engineering. I also studied at Cornell for undergrad, and I graduated with a BS in Biological Engineering in December 2021. I am interested in synthetic biology and robotics, and I am currently doing my MEng research project on recombineering (recombination-mediated genetic engineering) in the Barstow Lab. I am a part of the Cornell Big Red Pep Band, where I play the flute and trumpet. I am also a chimesmaster, and I like to play ice hockey in my free time.
