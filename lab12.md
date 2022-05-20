@@ -67,11 +67,10 @@ In the Jupyter notebook, I edited the ```perform_observation_loop``` of class ``
 def perform_observation_loop(self, rot_vel=120):
         self.setup_notify()
         self.ble.send_command(CMD.OBSERVATION, None)
-        #await asyncio.sleep(30)
         time.sleep(30)
 
         tof_readings = [x / 1000 for x in self.tof_2_readings]
-        imu_readings = [x / 1000 for x in self.imu_readings]
+        imu_readings = self.imu_readings
         
         sensor_ranges = np.array(tof_readings[0:18])[np.newaxis].T
         sensor_bearings = np.array(imu_readings[0:18])[np.newaxis].T
@@ -88,7 +87,7 @@ In the above plots, the blue dots are the results from my localization code, and
 ## Implement observation loop functions: part 2
 After my first approach didn't work, I edited the robot code so that the robot used P control on the angle while executing the observation loop. In addition, instead of storing all of the IMU and TOF sensor data in arrays and sending it after running the observation loop, I modified the code so that the robot would send the data after each individual turn. 
 
-'''cpp
+```cpp
 while(counter < 18){
     previous_time = current_time;
     myICM.getAGMT();
@@ -107,9 +106,6 @@ while(counter < 18){
       brake();
       delay(100);
       tof_distance = get_tof_2();
-      //gyr_array[counter] = current_gyrZ;
-      //tof_array[counter] = tof_distance;
-      //counter++;
       tof_2_float.writeValue(tof_distance);
       imu_float.writeValue(current_gyrZ);
       setpoint = setpoint + 20;
@@ -119,11 +115,11 @@ while(counter < 18){
       brake();
     }
     }
-'''
+```
 
-In the Jupyter notebook, I modified the observation loop function so that instead of '''time.sleep()''', I used '''await asyncio.sleep()'''. Since the robot sends the individual data readings one by one, I also inserted a while loop so that the code waits for 18 readings before moving on and returning the proper arrays.
+In the Jupyter notebook, I modified the observation loop function so that instead of ```time.sleep()```, I used ```await asyncio.sleep()```. Since the robot sends the individual data readings one by one, I also inserted a while loop so that the code waits for 18 readings before moving on and returning the proper arrays.
 
-'''python
+```python
 async def perform_observation_loop(self, rot_vel=120):
     self.setup_notify()
     self.ble.send_command(CMD.OBSERVATION, None)
@@ -142,13 +138,13 @@ async def perform_observation_loop(self, rot_vel=120):
     sensor_bearings = np.array(imu_readings)[np.newaxis].T
 
     return sensor_ranges, sensor_bearings
-'''
+```
 
-Finally, I modified the code so that I could run the observation loop using Jonathan's robot. My robot had a set of wheels that would sometimes stop working, and the static friction was so high that it could barely make it through the observation loop. With all of these modifications, I was able to get the robot to turn very smoothly in a circle and obtained the following results. 
+Finally, I modified the code so that I could run the observation loop using Jonathan's robot. My own robot's wheels would sometimes stop working, and the static friction was so high that it could barely make it through the observation loop. With all of these modifications, I was able to get the robot to turn very smoothly in a circle and obtained the following results. 
 
 ![Take 2](images/lab12/take 2.PNG)
 
-As seen in the image above, the red crosses indicate where the robot was actually located, the blue dots are the belief, and the green dot at the middle is (0,0). The green check marks indicate that the blue dots are at the correct position, and the results were much improved from the first attempt. The two points at the top of the map were slightly off but still in the correct area, while the two points at the bottom of the map were spot-on. Unfortunately, I forgot to get the robot's belief for the first three points I ran, but I did salvage the belief for the final point (top left).
+As seen in the image above, the red crosses in the top two images indicate where the robot was actually located since the beliefs were incorrect, the blue dots represent the belief, and the green dot at the origin is (0,0). The green check marks in the bottom two images indicate that the blue dots are at the correct position. Overall, these results were much improved from the first attempt. The two points at the top of the map were slightly off but still in the correct area, while the two points at the bottom of the map were spot-on. Unfortunately, I forgot to get the robot's data for the first three points I ran, but I did salvage the data for the final point (top left).
 
 ![belief](images/lab12/belief.PNG)
 
