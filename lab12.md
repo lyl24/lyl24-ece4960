@@ -85,8 +85,69 @@ While the above code was able to get the robot to perform the observation loop, 
 
 In the above plots, the blue dots are the results from my localization code, and the red x's are approximately where the robot is actually located. The predicted locations are quite far off from the ground truth.
 
-## Implement observation loop functions: electric boogaloo
-yeah
+## Implement observation loop functions: part 2
+After my first approach didn't work, I edited the robot code so that the robot used P control on the angle while executing the observation loop. In addition, instead of storing all of the IMU and TOF sensor data in arrays and sending it after running the observation loop, I modified the code so that the robot would send the data after each individual turn. 
 
+'''cpp
+while(counter < 18){
+    previous_time = current_time;
+    myICM.getAGMT();
+    current_time = millis();
+    previous_gyrZ = current_gyrZ;
+    current_gyrZ = get_gyroscope(&myICM);
+
+    error_value = setpoint - current_gyrZ;
+    float proportional_term = error_value*kp;
+
+    if(error_value > 1.0 && setpoint < first_gyrZ + 350.0){
+      motorspeed = map(proportional_term, 0, 30, 100, 150);
+      turn_left();     
+    }
+    else if(error_value <= 1.0 && setpoint < first_gyrZ + 350.0){
+      brake();
+      delay(100);
+      tof_distance = get_tof_2();
+      //gyr_array[counter] = current_gyrZ;
+      //tof_array[counter] = tof_distance;
+      //counter++;
+      tof_2_float.writeValue(tof_distance);
+      imu_float.writeValue(current_gyrZ);
+      setpoint = setpoint + 20;
+      current_time = millis();
+    }
+    else{
+      brake();
+    }
+    }
+'''
+
+In the Jupyter notebook, I modified the observation loop function so that instead of '''time.sleep()''', I used '''await asyncio.sleep()'''. Since the robot sends the individual data readings one by one, I also inserted a while loop so that the code waits for 18 readings before moving on and returning the proper arrays.
+
+'''python
+async def perform_observation_loop(self, rot_vel=120):
+    self.setup_notify()
+    self.ble.send_command(CMD.OBSERVATION, None)
+    await asyncio.sleep(11)
+
+    while len(self.tof_readings) < 18 or len(self.imu_readings) < 18:
+        await asyncio.sleep(1)
+
+    tof_readings = [x / 1000 for x in self.tof_readings]
+    imu_readings = self.imu_readings
+
+    tof_readings.reverse()
+    imu_readings.reverse()
+
+    sensor_ranges = np.array(tof_readings)[np.newaxis].T
+    sensor_bearings = np.array(imu_readings)[np.newaxis].T
+
+    return sensor_ranges, sensor_bearings
+'''
+
+Finally, I modified the code so that I could run the observation loop using Jonathan's robot. My robot had a set of wheels that would sometimes stop working, and the static friction was so high that it could barely make it through the observation loop. With all of these modifications, I was able to get the robot to turn very smoothly in a circle and obtained the following results.
+
+![Take 2](images/lab12/take 2.PNG)
+
+As seen in the image above, the results were much improved. The two points at the top of the map were slightly off but still in the correct area, while the two points at the bottom of the map were spot-on.
 
 ### [Click here to return to homepage](https://lyl24.github.io/lyl24-ece4960)
