@@ -150,12 +150,6 @@ Finally, I modified the code so that I could run the observation loop using Jona
 
 As seen in the image above, the red crosses indicate where the robot was actually located, the blue dots are the belief, and the green dot at the middle is (0,0). The green check marks indicate that the blue dots are at the correct position, and the results were much improved from the first attempt. The two points at the top of the map were slightly off but still in the correct area, while the two points at the bottom of the map were spot-on. Unfortunately, I forgot to get the robot's belief for the first three points I ran, but I did salvage the belief for the final point (top left).
 
-'''
-2022-05-19 15:56:35,463 | INFO     |: Update Step
-2022-05-19 15:56:35,471 | INFO     |:      | Update Time: 0.008 secs
-2022-05-19 15:56:35,471 | INFO     |: Bel index     : (6, 8, 12) with prob = 0.9958695
-2022-05-19 15:56:35,480 | INFO     |: Bel_bar prob at index = 0.00051440329218107
-2022-05-19 15:56:35,481 | INFO     |: Belief        : (0.305, 1.219, 70.000)
-'''
+![belief](images/lab12/belief.PNG)
 
 ### [Click here to return to homepage](https://lyl24.github.io/lyl24-ece4960)
