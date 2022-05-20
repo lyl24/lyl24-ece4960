@@ -19,7 +19,7 @@ For this lab, the goal is to make the robot navigate through a set of waypoints 
 
 Before starting this lab, I wanted to code the robot to go around the course in the same way as the simulation robot. At each point, the robot will first do an observation loop to determine its current location. Then, it will calculate the angle and distance it needs to move in order to reach the next point in the trajectory. Once it reaches this point, it will do another observation loop to find its current location, then repeat this process until it reaches all points in the planned trajectory. Unfortunately, I ran out of time to implement this method since I focused so much on Lab 12 (Localization: real). Even though I managed to get good results for Lab 12, the success rate for determining the correct position was at most 50%, which wouldn't cut it for this lab. 
 
-I decided to use an open loop method where I control each of the turns and forward/backwards movements. I implemented simple P control on the distance travelled as well as for the angle when turning, then wrote this into commands in Arduino so that I could tell the robot to execute each action whenever I needed.
+In this lab, I used Jonathan's robot once again, since my robot was still Problematic. I decided to use an open loop method where I control each of the turns and forward/backwards movements. I implemented simple P control on the distance travelled as well as for the angle when turning, then wrote this into commands in Arduino so that I could tell the robot to execute each action whenever I needed.
 
 Arduino code for moving forward, where the input distance is the distance between the front TOF sensor and the nearest obstacle in front of the robot:
 ```cpp
@@ -37,7 +37,6 @@ case MOVE_FORWARD:
         current_distance = get_tof_2();
         error_value = current_distance - input_distance;
         proportional_term = error_value*kp;
-        Serial.println(proportional_term);
 
         if(error_value > 3.0){
           motorspeed = map(proportional_term, 0, 2000, 40, 80);
@@ -164,6 +163,6 @@ Using this series of commands, I ran four trials, and the robot was able to make
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/JddoyY4h0Jk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
-Since this method doesn't allow the robot to localize, the robot never really knows where it is located. As it makes minor mistakes throughout the course, these errors build up, and it is unable to fix these errors as it goes. If the course was longer and more complex, the rate at which the robot makes it to the final point would plummet due to the amount of error built up over time. If the robot could get robust localization results, it would be able to take previous mistakes into account when moving between points, and it should be able to accurately make it to the end of the course most of the time.
+Since this method doesn't allow the robot to localize, the robot never really knows where it is located. As it makes minor mistakes throughout the course, these errors build up, and it is unable to fix these errors on the go. If the course was longer and more complex, the success rate at which the robot makes it to the final point would plummet due to the amount of error built up over time. If the robot could get robust localization results, it would be able to take previous mistakes into account when moving between points, and it should be able to accurately make it to the end of the course most of the time.
 
 ### [Click here to return to homepage](https://lyl24.github.io/lyl24-ece4960)
